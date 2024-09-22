@@ -21,7 +21,6 @@ public class DynamicArray {
         if (size == arr.length)
             arr = Arrays.copyOf(arr, arr.length * 2);
 
-
         arr[size++] = x;
     }
 
