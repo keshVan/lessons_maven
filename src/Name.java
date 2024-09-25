@@ -1,23 +1,33 @@
 public class Name {
-    public String lastName;
-    public String firstName;
-    public String patronymic;
+    String lastName;
+    String firstName;
+    String patronymic;
+
+    public Name(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public Name(String lastName, String firstName) {
+        this.lastName = lastName;
+        this.firstName = firstName;
+    }
+
+    public Name(String lastName, String firstName, String patronymic) {
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.patronymic = patronymic;
+    }
 
     public String toString() {
-        String res = "";
-        String[] el = {lastName, firstName, patronymic};
-        boolean flag = false;
+        String out = "";
 
-        for (int i = 0; i < 3; i++) {
-            if (el[i] != null && flag) {
-                res += " " + el[i];
-            }
-            else if (el[i] != null) {
-                res += el[i];
-                flag = true;
-            }
-        }
+        if (lastName != null)
+            out += lastName + " ";
+        if (firstName != null)
+            out += firstName + " ";
+        if (patronymic != null)
+            out += patronymic + " ";
 
-        return res;
+        return  out.trim();
     }
 }

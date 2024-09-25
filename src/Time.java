@@ -1,5 +1,5 @@
 public class Time {
-    public int seconds;
+    int seconds;
 
     public String toString() {
         int tempSeconds = seconds > 3600 * 24 ? seconds - 3600 * 24 : seconds;
