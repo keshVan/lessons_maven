@@ -8,7 +8,7 @@ public class Employee {
     }
 
     public String toString() {
-        if (name == dept.head.name) {
+        if (this == dept.head) {
             return name + " начальник " + dept.name + " отдела";
         }
 

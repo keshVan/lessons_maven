@@ -1,70 +1,86 @@
+import java.rmi.StubNotFoundException;
 import java.sql.SQLOutput;
 import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        Point p1 = new Point(1, 3);
-        Point p2 = new Point(23, 8);
-        Point p3 = new Point(5, 10);
-        Point p4 = new Point(25, 10);
+        Student vasya = new Student("Вася", 3, 4, 5);
+        Student petya = new Student("Петя", vasya.marks);
+        petya.marks[0] = 5;
+        System.out.println(vasya);
+        System.out.println(petya);
+        Student andrey = new Student("Андрей", Arrays.copyOf(vasya.marks, vasya.marks.length));
+        vasya.marks[0] = 2;
+        System.out.println(vasya);
+        System.out.println(andrey);
+        System.out.println();
 
-        Line line1 = new Line(p1, p2);
-        Line line2 = new Line(p3, p4);
-        Line line3 = new Line(p1, p4);
+        Point p1 = new Point(1,5);
+        Point p2 = new Point(2,8);
+        Point p3 = new Point(5,3);
 
-        System.out.println(line1);
-        System.out.println(line2);
-        System.out.println(line3);
+        BrokenLine bline1 = new BrokenLine(p1, p2, p3);
+        System.out.println(bline1);
 
-        p1.x = 5;
-        p1.y = 7;
+        Point p4 = new Point(2,-5);
+        Point p5 = new Point(4,-8);
 
-        p4.x = 30;
-        p4.y = 12;
+        BrokenLine bline2 = new BrokenLine(p1, p4, p5, p3);
+        System.out.println(bline2);
 
-        System.out.println(line1);
-        System.out.println(line2);
-        System.out.println(line3);
+        p1.x = 3;
+        p1.y = 23;
 
-        Point p5 = new Point(31, 13);
-        line1.start = p5;
-        System.out.println(line1);
-        System.out.println(line3);
+        System.out.println(bline1);
+        System.out.println(bline2);
+        System.out.println();
 
-        Name nm1 = new Name("Клеопатра");
-        Name nm2 = new Name("Пушкин", "Александр", "Сергеевич");
-        Name nm3 = new Name("Маяковский", "Владимир");
 
-        Human hm1 = new Human(nm1, 152);
-        Human hm2 = new Human(nm2, 167);
-        Human hm3 = new Human(nm3, 189);
+        City a = new City("A");
+        City b = new City("B");
+        City c = new City("C");
+        City d = new City("D");
+        City e = new City("E");
+        City f = new City("F");
 
-        Name nm4 = new Name("Чудов", "Иван");
-        Name nm5 = new Name("Чудов", "Петр");
-        Name nm6 = new Name("Борис");
+        a.addLinkedCity(b, 1);
+        a.addLinkedCity(d, 6);
+        a.addLinkedCity(f, 5);
 
-        Human ivan = new Human(nm4, 180);
-        Human petr = new Human(nm5, 180, ivan, "m");
-        Human boris = new Human(nm6, 180, petr, "m");
+        b.addLinkedCity(a, 5);
+        b.addLinkedCity(c, 3);
 
-        System.out.println(ivan);
-        System.out.println(petr);
-        System.out.println(boris);
+        c.addLinkedCity(b, 3);
+        c.addLinkedCity(d, 4);
 
-        Human elena = new Human(new Name("Елена"), 160, boris, "f");
-        System.out.println(elena);
+        d.addLinkedCity(a, 4);
+        d.addLinkedCity(c, 2);
+        d.addLinkedCity(e, 6);
 
-        Department itDept = new Department();
-        itDept.name = "IT";
+        e.addLinkedCity(f, 2);
 
-        Employee em1 = new Employee("Петров", itDept);
-        Employee em2 = new Employee("Козлов", itDept);
-        Employee em3 = new Employee("Сидоров", itDept);
+        f.addLinkedCity(b, 1);
+        f.addLinkedCity(e, 2);
 
-        itDept.head = em2;
+        System.out.println(a);
+        System.out.println(b);
+        System.out.println(c);
+        System.out.println(d);
+        System.out.println(e);
+        System.out.println(f);
+        System.out.println();
 
-        System.out.println(em1);
-        System.out.println(em2);
-        System.out.println(em3);
+        Department itDept = new Department("IT");
+        Employee petrov = new Employee("Петров", itDept);
+        Employee kozlov = new Employee("Козлов", itDept);
+        Employee sidorov = new Employee("Сидоров", itDept);
+        itDept.head = kozlov;
+        Employee[] employees = {petrov, kozlov, sidorov};
+        itDept.employees = employees;
+
+        Employee[] employees1 = petrov.dept.getEmployees();
+        for (Employee employee : employees1) {
+            System.out.println(employee.name);
+        }
     }
 }
