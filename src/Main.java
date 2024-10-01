@@ -1,5 +1,3 @@
-import java.rmi.StubNotFoundException;
-import java.sql.SQLOutput;
 import java.util.Arrays;
 
 public class Main {
@@ -36,49 +34,49 @@ public class Main {
         System.out.println();
 
 
-        City a = new City("A");
-        City b = new City("B");
-        City c = new City("C");
-        City d = new City("D");
-        City e = new City("E");
-        City f = new City("F");
+        City city1 = new City("A");
+        City city2 = new City("B");
+        City city3 = new City("C");
+        City city4 = new City("D");
+        City city5 = new City("E");
+        City city6 = new City("F");
 
-        a.addLinkedCity(b, 1);
-        a.addLinkedCity(d, 6);
-        a.addLinkedCity(f, 5);
+        city1.addLinkedCity(city2, 1);
+        city1.addLinkedCity(city4, 6);
+        city1.addLinkedCity(city6, 5);
 
-        b.addLinkedCity(a, 5);
-        b.addLinkedCity(c, 3);
+        city2.addLinkedCity(city1, 5);
+        city2.addLinkedCity(city3, 3);
 
-        c.addLinkedCity(b, 3);
-        c.addLinkedCity(d, 4);
+        city3.addLinkedCity(city2, 3);
+        city3.addLinkedCity(city4, 4);
 
-        d.addLinkedCity(a, 4);
-        d.addLinkedCity(c, 2);
-        d.addLinkedCity(e, 6);
+        city4.addLinkedCity(city1, 4);
+        city4.addLinkedCity(city3, 2);
+        city4.addLinkedCity(city5, 6);
 
-        e.addLinkedCity(f, 2);
+        city5.addLinkedCity(city6, 2);
 
-        f.addLinkedCity(b, 1);
-        f.addLinkedCity(e, 2);
+        city6.addLinkedCity(city2, 1);
+        city6.addLinkedCity(city5, 2);
 
-        System.out.println(a);
-        System.out.println(b);
-        System.out.println(c);
-        System.out.println(d);
-        System.out.println(e);
-        System.out.println(f);
+        System.out.println(city1);
+        System.out.println(city2);
+        System.out.println(city3);
+        System.out.println(city4);
+        System.out.println(city5);
+        System.out.println(city6);
         System.out.println();
 
         Department itDept = new Department("IT");
-        Employee petrov = new Employee("Петров", itDept);
-        Employee kozlov = new Employee("Козлов", itDept);
-        Employee sidorov = new Employee("Сидоров", itDept);
-        itDept.head = kozlov;
-        Employee[] employees = {petrov, kozlov, sidorov};
+        Employee emp1 = new Employee("Петров", itDept);
+        Employee emp2 = new Employee("Козлов", itDept);
+        Employee emp3 = new Employee("Сидоров", itDept);
+        itDept.head = emp2;
+        Employee[] employees = {emp1, emp2, emp3};
         itDept.employees = employees;
 
-        Employee[] employees1 = petrov.dept.getEmployees();
+        Employee[] employees1 = emp1.dept.getEmployees();
         for (Employee employee : employees1) {
             System.out.println(employee.name);
         }
