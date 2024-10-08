@@ -1,84 +1,110 @@
+import java.rmi.StubNotFoundException;
 import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        Student vasya = new Student("Вася", 3, 4, 5);
-        Student petya = new Student("Петя", vasya.marks);
-        petya.marks[0] = 5;
-        System.out.println(vasya);
-        System.out.println(petya);
-        Student andrey = new Student("Андрей", Arrays.copyOf(vasya.marks, vasya.marks.length));
-        vasya.marks[0] = 2;
-        System.out.println(vasya);
-        System.out.println(andrey);
+        Point point1 = new Point(3, 5);
+        Point point2 = new Point(25, 6);
+        Point point3 = new Point(7, 8);
+        System.out.println(point1);
+        System.out.println(point2);
+        System.out.println(point3);
         System.out.println();
 
-        Point p1 = new Point(1,5);
-        Point p2 = new Point(2,8);
-        Point p3 = new Point(5,3);
+        Line line1 =  new Line(new Point(1,3), new Point(23,8));
+        Line line2 = new Line(5, 10, 25, 10);
+        Line line3 = new Line(line1.start, line2.end);
 
-        BrokenLine bline1 = new BrokenLine(p1, p2, p3);
-        System.out.println(bline1);
-
-        Point p4 = new Point(2,-5);
-        Point p5 = new Point(4,-8);
-
-        BrokenLine bline2 = new BrokenLine(p1, p4, p5, p3);
-        System.out.println(bline2);
-
-        p1.x = 3;
-        p1.y = 23;
-
-        System.out.println(bline1);
-        System.out.println(bline2);
+        House house1 = new House(2);
+        House house2 = new House(35);
+        House house3 = new House(91);
+        //house1.floors = 5;
+        System.out.println(house1);
+        System.out.println(house2);
+        System.out.println(house3);
         System.out.println();
 
-
-        City city1 = new City("A");
-        City city2 = new City("B");
-        City city3 = new City("C");
-        City city4 = new City("D");
-        City city5 = new City("E");
-        City city6 = new City("F");
-
-        city1.addLinkedCity(city2, 1);
-        city1.addLinkedCity(city4, 6);
-        city1.addLinkedCity(city6, 5);
-
-        city2.addLinkedCity(city1, 5);
-        city2.addLinkedCity(city3, 3);
-
-        city3.addLinkedCity(city2, 3);
-        city3.addLinkedCity(city4, 4);
-
-        city4.addLinkedCity(city1, 4);
-        city4.addLinkedCity(city3, 2);
-        city4.addLinkedCity(city5, 6);
-
-        city5.addLinkedCity(city6, 2);
-
-        city6.addLinkedCity(city2, 1);
-        city6.addLinkedCity(city5, 2);
-
-        System.out.println(city1);
-        System.out.println(city2);
-        System.out.println(city3);
-        System.out.println(city4);
-        System.out.println(city5);
-        System.out.println(city6);
+        Name name1 = new Name("Клеопатра");
+        Name name2 = new Name("Александр", "Пушкин", "Сергеевич");
+        Name name3 = new Name("Владимир", "Маяковский");
+        Name name4 = new Name("Христофор", "Бонифатьевич");
+        System.out.println(name1);
+        System.out.println(name2);
+        System.out.println(name3);
+        System.out.println(name4);
         System.out.println();
 
-        Department itDept = new Department("IT");
-        Employee emp1 = new Employee("Петров", itDept);
-        Employee emp2 = new Employee("Козлов", itDept);
-        Employee emp3 = new Employee("Сидоров", itDept);
-        itDept.head = emp2;
-        Employee[] employees = {emp1, emp2, emp3};
-        itDept.employees = employees;
+        Human human1 = new Human("Лев", 170);
+        Human human2 = new Human(new Name("Сергей", "Пушкин"), 168, human1);
+        Human human3 = new Human("Александр", 167, human2);
+        System.out.println(human1);
+        System.out.println(human2);
+        System.out.println(human3);
+        System.out.println();
 
-        Employee[] employees1 = emp1.dept.getEmployees();
-        for (Employee employee : employees1) {
-            System.out.println(employee.name);
-        }
+        Student student1 = new Student("Вася", 3, 4, 5);
+        Student student2 = new Student("Максим");
+        System.out.println(student1);
+        System.out.println(student2);
+        System.out.println();
+
+        Gun gun = new Gun(3);
+        gun.shoot();
+        gun.shoot();
+        gun.shoot();
+        gun.shoot();
+        gun.shoot();
+        System.out.println();
+
+        Cat cat = new Cat("Барсик");
+        cat.meow();
+        cat.meow(3);
+        System.out.println();
+
+        Line line4 =  new Line(1, 1, 10, 15);
+        System.out.println(line4.getLength());
+        System.out.println();
+
+        Time time1 = new Time(34056);
+        Time time2 = new Time(4532);
+        Time time3 = new Time(123);
+
+        System.out.println(time1.getHour());
+        System.out.println(time2.getMinute());
+        System.out.println(time3.getSeconds());
+
+        Fraction f1 = new Fraction(1, 3);
+        Fraction f2 = new Fraction(2, 3);
+        Fraction f3 = new Fraction(1, 8);
+
+        System.out.println(f1 + " + " + f2 + " = " + f1.sum(f2));
+        System.out.println(f1 + " - " + f2 + " = " + f1.minus(f2));
+        System.out.println(f1 + " * " + f2 + " = " + f1.mult(f2));
+        System.out.println(f1 + " : " + f2 + " = " + f1.div(f2));
+
+        System.out.println(f1.sum(f2).div(f3).minus(5));
+        System.out.println();
+
+        Student student3 = new Student("Вася", 3, 4, 5, 4);
+        Student student4 = new Student("Петя", 5, 5, 5, 5);
+        System.out.println(student3.getAverageMarks());
+        System.out.println(student4.getAverageMarks());
+        System.out.println(student3.isExcellentStudent());
+        System.out.println(student4.isExcellentStudent());
+        System.out.println();
+
+        BrokenLine bline1 = new BrokenLine(new Point(1, 5), new Point(2, 8), new Point(5, 3));
+        System.out.println(bline1.getLength());
+        bline1.addPoints(new Point(5, 15), new Point(8, 10));
+        System.out.println(bline1.getLength());
+        System.out.println();
+
+        Square square = new Square(5, 3, 23);
+        BrokenLine bline2 = square.getBrokenLine();
+        System.out.println(bline2.getLength());
+        bline2.points[bline2.points.length-1].x = 15;
+        bline2.points[bline2.points.length-1].y = 25;
+        System.out.println(bline2.getLength());
+
     }
 }

@@ -4,17 +4,16 @@ public class Name {
     String patronymic;
 
     public Name(String firstName) {
-        this.firstName = firstName;
+        this(firstName, null);
     }
 
-    public Name(String lastName, String firstName) {
-        this.lastName = lastName;
-        this.firstName = firstName;
+    public Name(String firstName, String lastName) {
+        this(firstName, lastName, null);
     }
 
-    public Name(String lastName, String firstName, String patronymic) {
-        this.lastName = lastName;
+    public Name(String firstName, String lastName, String patronymic) {
         this.firstName = firstName;
+        this.lastName = lastName;
         this.patronymic = patronymic;
     }
 

@@ -1,5 +1,9 @@
 public class House {
-    public int floors;
+    public final int floors;
+
+    public House(int floors) {
+        this.floors = floors;
+    }
 
     public String toString() {
         if (floors % 10 == 1 && floors % 100 != 11) {

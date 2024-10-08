@@ -12,4 +12,18 @@ public class Student {
     public String toString() {
         return name + ": " + Arrays.toString(marks);
     }
+
+    public double getAverageMarks() {
+        double res = 0;
+
+        for (int i = 0; i < marks.length; i++) {
+            res += marks[i];
+        }
+
+        return res > 0 ? res / marks.length : res;
+    }
+
+    public boolean isExcellentStudent() {
+        return this.getAverageMarks() == 5;
+    }
 }

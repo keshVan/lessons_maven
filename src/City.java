@@ -9,18 +9,18 @@ public class City {
         this.name = name;
     }
 
-    public void addLinkedCity(City linkedCity, int cost) {
-        roads.add(new Road(linkedCity, cost));
+    public City(String name, City[] cities, int[] prices){
+        this(name);
+        for (int i = 0; i < cities.length; i++) {
+            this.addLinkedCity(cities[i], prices[i]);
+        }
+    }
+
+    public void addLinkedCity(City linkedCity, int price) {
+        roads.add(new Road(linkedCity, price));
     }
 
     public String toString() {
-        String out = "Из города " + name + " можно поехать в ";
-
-        for (int i = 0; i < roads.size()-1; i++)
-            out += roads.get(i) + ", ";
-
-        out += roads.get(roads.size()-1);
-
-        return out;
+        return "Из города " + name + " можно поехать в " + roads;
     }
 }

@@ -2,46 +2,35 @@ public class Human {
     Name name;
     int height;
     Human father;
-    String gender;
+
+    public Human(String name, int height) {
+        this(name, height, null);
+    }
+
+    public Human(String name, int height, Human father) {
+        this(new Name(name), height, father);
+    }
 
     public Human(Name name, int height) {
-        this.name = name;
-        this.height = height;
+        this(name, height, null);
     }
 
     public Human(Name name, int height, Human father) {
         this.name = name;
+        if (father != null) {
+            if(name.lastName == null && father.name.lastName != null) name.lastName = father.name.lastName;
+            if(name.patronymic == null)  name.patronymic = formatPatronymic(father.name.firstName);
+        }
         this.height = height;
-        this.father = father;
     }
 
-    public Human(Name name, int height, Human father, String gender) {
-        this.name = name;
-        this.height = height;
-        this.father = father;
-        this.gender = gender;
+    private String formatPatronymic(String name) {
+        if (name == "Лев") return "Львович";
+        if (name.charAt(name.length()-1) == 'й') return name.substring(0, name.length()-1) + "евич";
+        return name + "ович";
     }
 
     public String toString() {
-        if (name.lastName == null && father != null && father.name.lastName != null)
-            switch (gender) {
-                case "m":
-                    name.lastName = father.name.lastName;
-                    break;
-                case "f":
-                    name.lastName = father.name.lastName + "а";
-                    break;
-            }
-        if (name.patronymic == null && father != null && father.name.firstName != null)
-            switch (gender) {
-                case "m":
-                    name.patronymic = father.name.firstName + "ович";
-                    break;
-                case "f":
-                    name.patronymic = father.name.firstName + "овна";
-                    break;
-            }
-
         return name + ", рост: " + height;
     }
 
