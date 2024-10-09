@@ -1,33 +1,47 @@
 public class Time {
-    int seconds;
+    private int seconds;
 
     public Time(int seconds) {
-        this.seconds = seconds;
+        checkNegative(seconds);
+        this.seconds = seconds > 86400 ? seconds - 86400 : seconds;
     }
 
     public Time(int hours, int minutes, int seconds) {
         this(hours * 3600 + minutes * 60 + seconds);
     }
 
-    public String toString() {
-        int tempSeconds = seconds > 3600 * 24 ? seconds - 3600 * 24 : seconds;
+    public void setSeconds(int seconds) {
+        checkNegative(seconds);
+        this.seconds = seconds;
+    }
 
-        int hours = tempSeconds / 3600;
-        int minutes = tempSeconds % 3600 / 60;
-        int seconds = tempSeconds % 3600 % 60;
+    private void checkNegative(int seconds) {
+        if (seconds < 0)
+            throw new IllegalArgumentException("seconds must be non-negative");
+    }
+
+    public int getSeconds() {
+        return seconds;
+    }
+
+    public String toString() {
+
+        int hours = this.seconds / 3600;
+        int minutes = this.seconds  % 3600 / 60;
+        int seconds = this.seconds  % 3600 % 60;
 
         return String.format("%02d:%02d:%02d", hours, minutes, seconds);
     }
 
-    public int getHour() {
+    public int lastHour() {
         return seconds / 3600;
     }
 
-    public int getMinute() {
+    public int lastMinute() {
         return seconds % 3600 / 60;
     }
 
-    public int getSeconds() {
+    public int lastSecond() {
         return seconds % 3600 % 60;
     }
 }

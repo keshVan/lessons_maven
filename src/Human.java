@@ -1,7 +1,7 @@
 public class Human {
-    Name name;
-    int height;
-    Human father;
+    private Name name;
+    private int height;
+    private Human father;
 
     public Human(String name, int height) {
         this(name, height, null);
@@ -18,12 +18,40 @@ public class Human {
     public Human(Name name, int height, Human father) {
         this.name = name;
         if (father != null) {
-            if(name.lastName == null && father.name.lastName != null) name.lastName = father.name.lastName;
-            if(name.patronymic == null)  name.patronymic = formatPatronymic(father.name.firstName);
+            if(name.getLastName() == null && father.name.getLastName() != null) name.setLastName(father.name.getLastName());
+            if(name.getPatronymic() == null)  name.setPatronymic(formatPatronymic(father.name.getFirstName()));
         }
         this.height = height;
     }
 
+    public Human(Human h) {
+        this(h.name, h.height, h.father);
+    }
+
+    public Name getName() {
+        return new Name(name);
+    }
+
+    public void setName(Name name) {
+        this.name = name;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public Human getFather() {
+        return new Human(father);
+    }
+
+    public void setFather(Human father) {
+        this.father = father;
+    }
+    
     private String formatPatronymic(String name) {
         if (name == "Лев") return "Львович";
         if (name.charAt(name.length()-1) == 'й') return name.substring(0, name.length()-1) + "евич";

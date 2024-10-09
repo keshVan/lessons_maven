@@ -1,39 +1,39 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class BrokenLine {
-    Point[] points;
-
-    public BrokenLine(){};
+    private List<Point> points = new ArrayList<>();
 
     public BrokenLine(Point... points) {
+        for (Point p : points)
+            this.points.add(p);
+    }
+
+    public List<Point> getPoints() {
+        return new ArrayList<>(points);
+    }
+
+    public void setPoints(List<Point> points) {
         this.points = points;
     }
 
     public String toString() {
-        return "Линия " + Arrays.toString(points);
+        return "Линия " + points;
     }
 
-    public void addPoints(Point... p) {
-        Point[] newPoints = Arrays.copyOf(points, points.length + p.length);
-        for (int i = points.length; i < points.length + p.length; i++) {
-            newPoints[i] = p[i-points.length];
-        }
-        points = newPoints;
+    public void addPoints(Point... points) {
+        for (Point p : points)
+            this.points.add(p);
     }
 
     public int getLength() {
         int res = 0;
 
-        for (int i = 0; i < points.length - 1; i++) {
-            res += getLengthPart(points[i], points[i + 1]);
+        for (int i = 0; i < points.size() - 1; i++) {
+            res += new Line(points.get(i), points.get(i+1)).length();
         }
 
         return res;
     }
 
-    private int getLengthPart(Point start, Point end) {
-        return (int)Math.sqrt( Math.pow(end.x - start.x, 2) + Math.pow(end.y - start.y, 2) );
-    }
 }

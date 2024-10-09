@@ -1,10 +1,24 @@
 public class Fraction {
-    int numerator;
-    int denominator;
+    private final int numerator, denominator;
 
     public Fraction(int numerator, int denominator) {
+        if (denominator == 0)
+            throw new IllegalArgumentException("denominator cannot be zero");
+        if (numerator < 0 && denominator < 0) {
+            numerator = -numerator;
+            denominator = -denominator;
+        }
+
         this.numerator = numerator;
         this.denominator = denominator;
+    }
+
+    public int getNumerator() {
+        return numerator;
+    }
+
+    public int getDenominator() {
+        return denominator;
     }
 
     public String toString() {

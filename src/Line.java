@@ -15,7 +15,7 @@ public class Line {
         return "Линия от " + start + " до " + end;
     }
 
-    public int getLength() {
-        return (int)Math.sqrt( Math.pow(end.x - start.x, 2) + Math.pow(end.y - start.y, 2) );
+    public int length() {
+        return (int)Math.sqrt( Math.pow(end.getX() - start.getX(), 2) + Math.pow(end.getY()- start.getY(), 2) );
     }
 }
