@@ -39,6 +39,6 @@ public class Square {
     }
 
     public BrokenLine getBrokenLine() {
-        return new BrokenLine(startPoint, new Point(startPoint.getX() + sideLength, startPoint.getY()), new Point(startPoint.getX() + sideLength, startPoint.getY() - sideLength ), new Point(startPoint.getX(), startPoint.getY() - sideLength));
+        return new BrokenLine(startPoint, new Point(startPoint.x + sideLength, startPoint.x), new Point(startPoint.x + sideLength, startPoint.y - sideLength ), new Point(startPoint.x, startPoint.y - sideLength));
     }
 }

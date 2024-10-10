@@ -8,8 +8,9 @@ public class Student {
     public Student(String name, int... marks) {
         checkName(name);
         this.name = name;
-        for (int mark : marks)
-            this.marks.add(mark);
+        for (int mark : marks) {
+            addMark(mark);
+        }
     }
 
     public String getName() {
@@ -26,12 +27,25 @@ public class Student {
     }
 
     public void setMarks(List<Integer> marks) {
-        this.marks = marks;
+        this.marks = new ArrayList<>();
+        for (int mark : marks) {
+            addMark(mark);
+        }
     }
 
     private void checkName(String name) {
         if (name == null || name.isBlank())
             throw new IllegalArgumentException("name cannot be null or empty");
+    }
+
+    public void addMark(int mark) {
+        if (mark < 2 || mark > 5)
+            throw new IllegalArgumentException("mark must be 2 to 5");
+        marks.add(mark);
+    }
+
+    public void removeMark(int index) {
+        marks.remove(index);
     }
 
     public String toString() {

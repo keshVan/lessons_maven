@@ -1,6 +1,6 @@
 public class Name {
     private String lastName;
-    private String firstName;
+    final private String firstName;
     private String patronymic;
 
     public Name(String firstName) {
@@ -12,7 +12,8 @@ public class Name {
     }
 
     public Name(String firstName, String lastName, String patronymic) {
-        checkFirstName(firstName);
+        if (firstName == null || firstName.isBlank())
+            throw new IllegalArgumentException("name cannot be null or empty");
         this.firstName = firstName;
         this.lastName = lastName;
         this.patronymic = patronymic;
@@ -34,22 +35,12 @@ public class Name {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        checkFirstName(firstName);
-        this.firstName = firstName;
-    }
-
     public String getPatronymic() {
         return patronymic;
     }
 
     public void setPatronymic(String patronymic) {
         this.patronymic = patronymic;
-    }
-
-    private void checkFirstName(String name) {
-        if (name == null || name.isBlank())
-            throw new IllegalArgumentException("name cannot be null or empty");
     }
 
     public String toString() {
