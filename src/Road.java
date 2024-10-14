@@ -1,13 +1,30 @@
 public class Road {
-    City finalCity;
-    int cost;
+    private City destinationCity;
+    private int cost;
 
-    public Road(City finalCity, int cost) {
-        this.finalCity = finalCity;
+    public Road (City destinationCity, int cost) {
+        this.destinationCity = destinationCity;
+        this.cost = cost;
+    }
+
+
+    public City getDestinationCity() {
+        return destinationCity;
+    }
+
+    public void setDestinationCity(City destinationCity) {
+        this.destinationCity = destinationCity;
+    }
+
+    public int getCost() {
+        return cost;
+    }
+
+    public void setCost(int cost) {
         this.cost = cost;
     }
 
     public String toString() {
-        return finalCity.name + ": " + cost;
+        return destinationCity.getName() + ": " + cost;
     }
 }

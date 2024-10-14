@@ -1,6 +1,6 @@
 public class Employee {
-    String name;
-    Department dept;
+    private String name;
+    private Department dept;
 
     public Employee(String name, Department dept) {
         this.name = name;
@@ -8,10 +8,10 @@ public class Employee {
     }
 
     public String toString() {
-        if (this == dept.head) {
-            return name + " начальник " + dept.name + " отдела";
+        if (this == dept.getHead()) {
+            return name + " начальник " + dept.getName() + " отдела";
         }
 
-        return name + " работает в отделе " + dept.name + ", начальник которого " + dept.head.name;
+        return name + " работает в отделе " + dept.getName() + ", начальник которого " + dept.getHead().name;
     }
 }
