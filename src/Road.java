@@ -1,5 +1,5 @@
 public class Road {
-    private City destinationCity;
+    private final City destinationCity;
     private int cost;
 
     public Road (City destinationCity, int cost) {
@@ -10,10 +10,6 @@ public class Road {
 
     public City getDestinationCity() {
         return destinationCity;
-    }
-
-    public void setDestinationCity(City destinationCity) {
-        this.destinationCity = destinationCity;
     }
 
     public int getCost() {

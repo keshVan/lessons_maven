@@ -5,15 +5,11 @@ public class City {
     private String name;
     private List<Road> roads = new ArrayList<Road>();
 
-    public City(String name) {
-        this.name = name;
-    }
-
-    public City(String name, City[] cities, int[] prices){
-        this(name);
-        for (int i = 0; i < cities.length; i++) {
-            this.addRoad(cities[i], prices[i]);
+    public City(String name, Road... roads){
+        for (Road road : roads) {
+            addRoad(road);
         }
+        this.name = name;
     }
 
     public String getName() {
@@ -29,7 +25,10 @@ public class City {
     }
 
     public void setRoads(List<Road> roads) {
-        this.roads = roads;
+        this.roads = new ArrayList<Road>();
+        for (Road road : roads){
+            addRoad(road);
+        }
     }
 
     public void addRoad(City destinationCity, int price) {
@@ -37,38 +36,45 @@ public class City {
     }
 
     public void addRoad(Road road) {
-        if (!checkCity(road.getDestinationCity()))
-            throw new IllegalArgumentException("Road already exists between " + name + " and " + road.getDestinationCity().getName());
+        if(road.getDestinationCity().equals(road))
+            throw new IllegalArgumentException("Road from " + name + " to " + road.getDestinationCity().getName() + " cannot exist");
 
+        checkCities(this, road.getDestinationCity());
         roads.add(road);
-        road.getDestinationCity().roads.add(new Road(this, road.getCost()));
-    }
-
-    public void deleteRoad(City city){
-        if ( !(removeByCity(this, city) && removeByCity(city, this)) )
-            throw new IllegalArgumentException("Road from " + name + " to " + city.name + " does not exist");
+        road.getDestinationCity().addRoadBackTo(this, road.getCost());
     }
 
     public String toString() {
         return "Из города " + name + " можно поехать в " + roads;
     }
 
+    private void addRoadBackTo(City city, int cost){
+        roads.add(new Road(city, cost));
+    }
+
+    public void deleteRoad(City city){
+        if ( !(deleteRoadTo(city) && city.deleteRoadTo(this)))
+            throw new IllegalArgumentException("Road from " + name + " to " + city.getName() + " doesn't exist");
+    }
+
+    private boolean deleteRoadTo(City destCity){
+        for (Road road : roads){
+            if (road.getDestinationCity() == destCity){
+                roads.remove(road);
+                return true;
+            }
+        }
+        return false;
+    }
+
     private boolean checkCity(City city){
         for (Road road : roads)
-            if (road.getDestinationCity().equals(city)) return false;
+            if (road.getDestinationCity() == city) return false;
         return true;
     }
 
-    private boolean removeByCity(City start, City dest){
-        boolean remove = false;
-        for (Road road : start.roads){
-            if (road.getDestinationCity().equals(dest)){
-                start.roads.remove(road);
-                remove = true;
-                break;
-            }
-        }
-        return remove;
+    private void checkCities(City city1, City city2){
+        if (!(city1.checkCity(city2) && city2.checkCity(city1)))
+            throw new IllegalArgumentException("Road already exists between " + city1.getName() + " and " + city2.getName());
     }
-
 }
