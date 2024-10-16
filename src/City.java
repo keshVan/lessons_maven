@@ -7,7 +7,7 @@ public class City {
 
     public City(String name, Road... roads){
         for (Road road : roads) {
-            addRoad(road);
+            putRoad(road);
         }
         this.name = name;
     }
@@ -27,33 +27,38 @@ public class City {
     public void setRoads(List<Road> roads) {
         this.roads = new ArrayList<Road>();
         for (Road road : roads){
-            addRoad(road);
+            putRoad(road);
         }
     }
 
-    public void addRoad(City destinationCity, int price) {
-        addRoad(new Road(destinationCity, price));
+    public void putRoad(City destinationCity, int price) {
+        putRoad(new Road(destinationCity, price));
     }
 
-    public void addRoad(Road road) {
-        if(road.getDestinationCity().equals(road))
-            throw new IllegalArgumentException("Road from " + name + " to " + road.getDestinationCity().getName() + " cannot exist");
+    public void putRoad(Road newRoad) {
+        if(newRoad.getDestinationCity() == this)
+            throw new IllegalArgumentException("Road from " + name + " to " + newRoad.getDestinationCity().getName() + " cannot exist");
 
-        checkCities(this, road.getDestinationCity());
-        roads.add(road);
-        road.getDestinationCity().addRoadBackTo(this, road.getCost());
+        for (Road road : roads) {
+            if (road.getDestinationCity() == newRoad.getDestinationCity()){
+                road.setCost(newRoad.getCost());
+                return;
+            }
+        }
+        roads.add(newRoad);
+        //road.getDestinationCity().addRoadBackTo(this, road.getCost());
     }
 
     public String toString() {
         return "Из города " + name + " можно поехать в " + roads;
     }
 
-    private void addRoadBackTo(City city, int cost){
+    /*private void addRoadBackTo(City city, int cost){
         roads.add(new Road(city, cost));
-    }
+    }*/
 
     public void deleteRoad(City city){
-        if ( !(deleteRoadTo(city) && city.deleteRoadTo(this)))
+        if (!deleteRoadTo(city))
             throw new IllegalArgumentException("Road from " + name + " to " + city.getName() + " doesn't exist");
     }
 
@@ -67,14 +72,14 @@ public class City {
         return false;
     }
 
-    private boolean checkCity(City city){
+    /*private boolean checkCity(City city){
         for (Road road : roads)
             if (road.getDestinationCity() == city) return false;
         return true;
-    }
+    }*/
 
-    private void checkCities(City city1, City city2){
+    /*private void checkCities(City city1, City city2){
         if (!(city1.checkCity(city2) && city2.checkCity(city1)))
             throw new IllegalArgumentException("Road already exists between " + city1.getName() + " and " + city2.getName());
-    }
+    }*/
 }
