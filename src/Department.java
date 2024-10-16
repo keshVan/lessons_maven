@@ -41,22 +41,16 @@ public class Department {
     }
 
     public void addEmployee(Employee employee){
-        if(inDept(employee))
-            throw new IllegalArgumentException("This employee already exists in this department");
-        if (employee.getDept() != null) {
-            throw new IllegalArgumentException("This employee work in another department");
-        }
-        employees.add(employee);
-        employee.setDept(this);
+        if (employee == null) return;
+        if (employees.contains(employee) && employee.getDept() == this) return;
+        if (employee.getDept() != this)
+            employee.setDept(this);
+        if (!employees.contains(employee))
+            employees.add(employee);
     }
 
     public void removeEmployee(Employee employee){
-        if(!inDept(employee))
-            throw new IllegalArgumentException("This employee doesn't exist in this department");
-        if (employee == head)
-            head = null;
-        employees.remove(employee);
-        employee.setDept(null);
+        
     }
 
     public String toString() {

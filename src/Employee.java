@@ -26,9 +26,10 @@ public class Employee {
     }
 
     public void setDept(Department dept){
-        if (this == dept.getHead())
-            throw new IllegalArgumentException("This employee is head of " + dept.getName());
+        if (this.dept == dept) return;
+        if (this.dept != null) this.dept.removeEmployee(this);
         this.dept = dept;
+        if (dept != null) dept.addEmployee(this);
     }
 
     public String toString() {
