@@ -33,11 +33,14 @@ public class Employee {
     }
 
     public String toString() {
-        if (this == dept.getHead()) {
-            return name + " начальник " + dept.getName() + " отдела";
-        }
+        if (this.dept != null) {
+            if (this == dept.getHead()) {
+                return name + " начальник " + " отдела";
+            }
 
-        return name + " работает в отделе " + dept.getName();
+            return name + " работает в отделе " + dept.getName();
+        }
+        return name + " нигде не работает";
     }
 
 }

@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Department {
-    private String name;
+      String name;
     private Employee head;
     private List<Employee> employees = new ArrayList<>();
 
@@ -50,7 +50,12 @@ public class Department {
     }
 
     public void removeEmployee(Employee employee){
-        
+        if (employee == null) return;
+        if (!employees.contains(employee) && employee.getDept() != this) return;
+        if (employees.contains(employee) && employee.getDept() == this) {
+            employees.remove(employee);
+            employee.setDept(null);
+        }
     }
 
     public String toString() {
