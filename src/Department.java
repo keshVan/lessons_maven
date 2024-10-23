@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Department {
-      String name;
+    private String name;
     private Employee head;
     private List<Employee> employees = new ArrayList<>();
 
@@ -25,8 +25,10 @@ public class Department {
     }
 
     public void setHead(Employee head) {
-        if (!inDept(head))
-            throw new IllegalArgumentException("Head of the department must work in it");
+        if (head == null) return;
+        if (this.head == head) return;
+        if (!employees.contains(head) && head.getDept() != this)
+            addEmployee(head);
         this.head = head;
     }
 
@@ -52,6 +54,7 @@ public class Department {
     public void removeEmployee(Employee employee){
         if (employee == null) return;
         if (!employees.contains(employee) && employee.getDept() != this) return;
+        if (employee == head) head = null;
         if (employees.contains(employee) && employee.getDept() == this) {
             employees.remove(employee);
             employee.setDept(null);
@@ -59,7 +62,11 @@ public class Department {
     }
 
     public String toString() {
-        return "Работники: " + employees + " , начальник: " + head.getName();
+        String headName = "";
+        if (head != null)
+            headName += head.getName();
+
+        return "Работники: " + employees + " , начальник: " + headName;
     }
 
     private boolean inDept(Employee emp){
