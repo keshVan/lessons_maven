@@ -35,7 +35,7 @@ public class Line {
         return "Линия от " + start + " до " + end;
     }
 
-    public int length() {
-        return (int)Math.sqrt( Math.pow(end.x - start.y, 2) + Math.pow(end.x - start.y, 2) );
+    public double length() {
+        return Math.sqrt( Math.pow(end.x - start.y, 2) + Math.pow(end.x - start.y, 2) );
     }
 }

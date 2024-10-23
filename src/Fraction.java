@@ -1,4 +1,4 @@
-public class Fraction {
+public class Fraction extends Number{
     private final int numerator, denominator;
 
     public Fraction(int numerator, int denominator) {
@@ -57,5 +57,21 @@ public class Fraction {
 
     public Fraction div(int num) {
         return div(new Fraction(num, 1));
+    }
+
+    public int intValue() {
+        return numerator / denominator;
+    }
+
+    public long longValue() {
+        return numerator / denominator;
+    }
+
+    public float floatValue() {
+        return (float)numerator / denominator;
+    }
+
+    public double doubleValue() {
+        return (double)numerator / denominator;
     }
 }

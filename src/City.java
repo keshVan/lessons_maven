@@ -42,20 +42,16 @@ public class City {
         for (Road road : roads) {
             if (road.getDestinationCity() == newRoad.getDestinationCity()){
                 road.setCost(newRoad.getCost());
+                System.out.println(name + " " + newRoad.getDestinationCity().name);
                 return;
             }
         }
         roads.add(newRoad);
-        //road.getDestinationCity().addRoadBackTo(this, road.getCost());
     }
 
     public String toString() {
         return "Из города " + name + " можно поехать в " + roads;
     }
-
-    /*private void addRoadBackTo(City city, int cost){
-        roads.add(new Road(city, cost));
-    }*/
 
     public void deleteRoad(City city){
         if (!deleteRoadTo(city))
@@ -72,14 +68,4 @@ public class City {
         return false;
     }
 
-    /*private boolean checkCity(City city){
-        for (Road road : roads)
-            if (road.getDestinationCity() == city) return false;
-        return true;
-    }*/
-
-    /*private void checkCities(City city1, City city2){
-        if (!(city1.checkCity(city2) && city2.checkCity(city1)))
-            throw new IllegalArgumentException("Road already exists between " + city1.getName() + " and " + city2.getName());
-    }*/
 }

@@ -1,5 +1,5 @@
 public class Road {
-    private final City destinationCity;
+    private City destinationCity;
     private int cost;
 
     public Road (City destinationCity, int cost) {

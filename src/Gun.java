@@ -1,34 +1,22 @@
-public class Gun {
-    private int ammo;
+public class Gun extends Weapon {
 
-    public Gun(){
+    public Gun() {
         this(5);
     }
 
-    public Gun(int ammo){
-        checkNegative(ammo);
-        this.ammo = ammo;
+    public Gun(int ammo) {
+        this(ammo, ammo);
     }
 
-    public int getAmmo() {
-        return ammo;
-    }
-
-    public void setAmmo(int ammo) {
-        checkNegative(ammo);
-        this.ammo = ammo;
-    }
-
-    private void checkNegative(int ammo) {
-        if (ammo < 0)
-            throw new IllegalArgumentException("ammo must be non-negative");
+    public Gun(int ammo, int maxAmmo) {
+        super(ammo, maxAmmo);
     }
 
     public void shoot(){
-        if(ammo > 0) {
+        if(super.getAmmo()) {
             System.out.println("Бах!");
-            ammo--;
         }
         else System.out.println("Клац!");
     }
+
 }

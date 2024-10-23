@@ -12,7 +12,7 @@ public class TelephoneDirectory {
         this.telephones = telephones;
     }
 
-    public String addTelephone(String number, String name) {
+    /*public String addTelephone(String number, String name) {
         for(int i = 0; i < telephones.size(); i++) {
             if (telephones.get(i)[1] == name) {
                 String oldNumber = telephones.get(i)[0];
@@ -21,5 +21,5 @@ public class TelephoneDirectory {
             }
         }
         telephones.add(new String[] {number, name});
-    }w
+    }*/
 }
