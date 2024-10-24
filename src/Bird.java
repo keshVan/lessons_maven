@@ -5,5 +5,7 @@ abstract class Bird {
         this.text = text;
     }
     
-    abstract void sing();
+    public void sing() {
+        System.out.println(text);
+    }
 }
