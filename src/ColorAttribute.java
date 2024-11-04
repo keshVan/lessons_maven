@@ -7,4 +7,9 @@ public class ColorAttribute extends Attribute {
     public String getValue() {
         return (String)super.getValue();
     }
+
+    @Override
+    public String toString() {
+        return "цвет: " + getValue();
+    }
 }

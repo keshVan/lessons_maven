@@ -1,19 +1,11 @@
 public class Main {
     public static void main(String[] args) {
-        Rifle rifle = new Rifle(50, 5);
-        rifle.shootNthSecs(3);
+        Point1D p1 = new Point1D(3, new ColorAttribute("красный"));
+        Point3D p2 = new Point3D(4, 2, 5, new TimeAttribute("11:00"));
+        Point2D p3 = new Point2D(7, 7, new TimeAttribute("15:35"), new ColorAttribute("желтый"));
 
-        Fraction f = new Fraction(25, 4);
-        System.out.println(f.intValue());
-        System.out.println(f.longValue());
-        System.out.println(f.floatValue());
-        System.out.println(f.doubleValue());
-
-        Sparrow spr = new Sparrow();
-        spr.sing();
-        Cuckoo ck = new Cuckoo();
-        ck.sing();
-        Parrot pr = new Parrot("Меня зовут Вито Скалетто. Я родился на Сицилии в 25 году");
-        pr.sing();
+        System.out.println(p1);
+        System.out.println(p2);
+        System.out.println(p3);
     }
 }
