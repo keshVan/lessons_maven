@@ -1,27 +1,21 @@
-public class Square extends Shape {
-    private int sideLength;
+public class Square extends Rectangle {
 
     public Square(Point startPoint, int sideLength) {
-        super(startPoint);
+        super(startPoint, sideLength, sideLength);
         checkPositive(sideLength);
-        this.sideLength = sideLength;
     }
 
     public Square(int x1, int y1, int sideLength) {
         this(new Point(x1, y1), sideLength);
     }
 
-    public int getSideLength() {
-        return sideLength;
+    public int getSide() {
+        return super.getSide1();
     }
 
-    public void setSideLength(int sideLength) {
+    public void setSide(int sideLength) {
         checkPositive(sideLength);
-        this.sideLength = sideLength;
-    }
-
-    public double area() {
-        return sideLength * sideLength;
+        super.setSide1(sideLength);
     }
 
     private void checkPositive(int sideLength) {
@@ -30,10 +24,10 @@ public class Square extends Shape {
     }
 
     public String toString() {
-        return "Квадрат в точке " + super.getStartPoint() + " со стороной " + sideLength;
+        return "Квадрат в точке " + super.getStartPoint() + " со стороной " + getSide();
     }
 
     public BrokenLine getBrokenLine() {
-        return new BrokenLine(super.getStartPoint(), new Point(super.getStartPoint().x + sideLength, super.getStartPoint().y), new Point(super.getStartPoint().x + sideLength, super.getStartPoint().y - sideLength ), new Point(super.getStartPoint().x, super.getStartPoint().y - sideLength));
+        return new BrokenLine(super.getStartPoint(), new Point(super.getStartPoint().x + getSide(), super.getStartPoint().y), new Point(super.getStartPoint().x + getSide(), super.getStartPoint().y - getSide() ), new Point(super.getStartPoint().x, super.getStartPoint().y - getSide()));
     }
 }
