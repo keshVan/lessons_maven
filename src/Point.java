@@ -1,4 +1,4 @@
-public class Point {
+public class Point implements Comparable<Point> {
     int x, y;
 
     public Point(int x, int y) {
@@ -15,5 +15,11 @@ public class Point {
 
     public String toString() {
         return "{" + x + ";" + y + "}";
+    }
+
+    @Override
+    public int compareTo(Point p) {
+        if (this.x == p.x) return p.y - this.y;
+        return p.x - this.x;
     }
 }

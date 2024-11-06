@@ -38,9 +38,9 @@ public class Student {
             throw new IllegalArgumentException("name cannot be null or empty");
     }
 
-    public void addMark(int mark) {
+    public void addMark(int mark) throws IllegalMarkException {
         if (mark < 2 || mark > 5)
-            throw new IllegalArgumentException("mark must be 2 to 5");
+            throw new IllegalMarkException(mark);
         marks.add(mark);
     }
 
