@@ -1,7 +1,8 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class BrokenLine {
+public class BrokenLine implements Countable, Brokenable {
     private List<Point> points = new ArrayList<>();
 
     public BrokenLine(Point... points) {
@@ -22,11 +23,15 @@ public class BrokenLine {
     }
 
     public void addPoints(Point... points) {
+        addPoints(Arrays.asList(points));
+    }
+
+    public void addPoints(List<Point> points) {
         for (Point p : points)
             this.points.add(p);
     }
 
-    public int getLength() {
+    public double length() {
         int res = 0;
 
         for (int i = 0; i < points.size() - 1; i++) {
@@ -36,4 +41,7 @@ public class BrokenLine {
         return res;
     }
 
+    public BrokenLine getBrokenLine() {
+        return this;
+    }
 }

@@ -1,4 +1,4 @@
-public class Square extends Rectangle {
+public class Square extends Rectangle implements Brokenable {
 
     public Square(Point startPoint, int sideLength) {
         super(startPoint, sideLength, sideLength);
@@ -28,6 +28,6 @@ public class Square extends Rectangle {
     }
 
     public BrokenLine getBrokenLine() {
-        return new BrokenLine(super.getStartPoint(), new Point(super.getStartPoint().x + getSide(), super.getStartPoint().y), new Point(super.getStartPoint().x + getSide(), super.getStartPoint().y - getSide() ), new Point(super.getStartPoint().x, super.getStartPoint().y - getSide()));
+        return new ClosedBrokenLine(super.getStartPoint(), new Point(super.getStartPoint().x + getSide(), super.getStartPoint().y), new Point(super.getStartPoint().x + getSide(), super.getStartPoint().y - getSide() ), new Point(super.getStartPoint().x, super.getStartPoint().y - getSide()));
     }
 }

@@ -1,4 +1,4 @@
-public class Line {
+public class Line implements Countable, Brokenable{
     private Point start = new Point();
     private Point end = new Point();
 
@@ -37,5 +37,10 @@ public class Line {
 
     public double length() {
         return Math.sqrt( Math.pow(end.x - start.y, 2) + Math.pow(end.x - start.y, 2) );
+    }
+
+    @Override
+    public BrokenLine getBrokenLine() {
+        return new BrokenLine(start, end);
     }
 }

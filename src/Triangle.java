@@ -1,4 +1,4 @@
-public class Triangle extends Shape {
+public class Triangle extends Shape implements Brokenable {
     private Point p2, p3;
 
     public Triangle(Point p1, Point p2, Point p3) {
@@ -18,5 +18,10 @@ public class Triangle extends Shape {
 
     public String toString() {
         return "Треугольник в точках " + getStartPoint() + ", " + p2 + ", " + p3;
+    }
+
+    @Override
+    public BrokenLine getBrokenLine() {
+        return new BrokenLine(new Point(getStartPoint()), p2, p3);
     }
 }
