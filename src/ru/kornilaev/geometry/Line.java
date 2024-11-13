@@ -1,5 +1,7 @@
 package ru.kornilaev.geometry;
 
+import java.util.Objects;
+
 public class Line implements Lengthable, Brokenable{
     private Point start = new Point();
     private Point end = new Point();
@@ -44,5 +46,18 @@ public class Line implements Lengthable, Brokenable{
     @Override
     public BrokenLine getBrokenLine() {
         return new BrokenLine(start, end);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Line line = (Line) o;
+        return (Objects.equals(start, line.start) && Objects.equals(end, line.end)) || (Objects.equals(end, line.start) && Objects.equals(start, line.end));
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(start) + Objects.hash(end);
     }
 }

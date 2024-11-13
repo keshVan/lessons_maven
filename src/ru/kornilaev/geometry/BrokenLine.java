@@ -3,6 +3,7 @@ package ru.kornilaev.geometry;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class BrokenLine implements Lengthable, Brokenable {
     private List<Point> points = new ArrayList<>();
@@ -45,5 +46,19 @@ public class BrokenLine implements Lengthable, Brokenable {
 
     public BrokenLine getBrokenLine() {
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        if (!(o instanceof BrokenLine)) return false;
+        BrokenLine that = (BrokenLine) o;
+        return Objects.equals(points, that.points);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(points);
     }
 }
