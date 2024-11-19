@@ -2,6 +2,7 @@ package ru.kornilaev.city;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class City {
     private String name;
@@ -58,6 +59,36 @@ public class City {
     public void deleteRoad(City city){
         if (!deleteRoadTo(city))
             throw new IllegalArgumentException("ru.kornilaev.city.Road from " + name + " to " + city.getName() + " doesn't exist");
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || !(o instanceof City)) return false;
+        City city = (City) o;
+        if (roads.size() != city.roads.size()) return false;
+
+        int count = 0;
+        for (Road curRoad : roads) {
+            for (Road road : city.roads) {
+                if (curRoad.equals(road)) {
+                    count++;
+                    break;
+                }
+            }
+        }
+
+        return roads.size() == count;
+
+
+    }
+
+    @Override
+    public int hashCode() {
+        int roadHash = 0;
+        for (Road road : roads)
+            roadHash += road.hashCode();
+        return roadHash;
     }
 
     private boolean deleteRoadTo(City destCity){

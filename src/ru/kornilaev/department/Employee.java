@@ -1,8 +1,8 @@
 package ru.kornilaev.department;
 
 public class Employee {
-    private String name;
-    private Department dept;
+    String name;
+    Department dept;
 
     public Employee(String name, Department dept) {
         this.name = name;
@@ -27,11 +27,11 @@ public class Employee {
         return dept;
     }
 
-    public void setDept(Department dept){
-        if (this.dept == dept) return;
-        if (this.dept != null) this.dept.removeEmployee(this);
+    public void setDept(Department dept) {
+        if (dept != null) {
+            dept.addEmployee(this);
+        }
         this.dept = dept;
-        if (dept != null) dept.addEmployee(this);
     }
 
     public String toString() {

@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Department {
-    private String name;
-    private Employee head;
-    private List<Employee> employees = new ArrayList<>();
+    String name;
+    Employee head;
+    List<Employee> employees = new ArrayList<>();
 
     public Department(String name, Employee... emps){
         this.name = name;
@@ -47,20 +47,17 @@ public class Department {
     public void addEmployee(Employee employee){
         if (employee == null) return;
         if (employees.contains(employee) && employee.getDept() == this) return;
-        if (employee.getDept() != this)
-            employee.setDept(this);
-        if (!employees.contains(employee))
-            employees.add(employee);
+        employee.dept.removeEmployee(employee);
+        employees.add(employee);
+        employee.dept = this;
     }
 
     public void removeEmployee(Employee employee){
         if (employee == null) return;
         if (!employees.contains(employee) && employee.getDept() != this) return;
         if (employee == head) head = null;
-        if (employees.contains(employee) && employee.getDept() == this) {
-            employees.remove(employee);
-            employee.setDept(null);
-        }
+        employees.remove(employee);
+        employee.dept = null;
     }
 
     public String toString() {

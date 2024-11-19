@@ -1,6 +1,6 @@
 package ru.kornilaev.math;
 
-public class Fraction extends Number{
+public class Fraction extends Number implements Cloneable {
     private final int numerator, denominator;
 
     public Fraction(int numerator, int denominator) {
@@ -75,5 +75,15 @@ public class Fraction extends Number{
 
     public double doubleValue() {
         return (double)numerator / denominator;
+    }
+
+    @Override
+    public Fraction clone() {
+        try {
+            return (Fraction)super.clone();
+        }
+        catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

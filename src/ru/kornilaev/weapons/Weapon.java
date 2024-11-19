@@ -1,8 +1,8 @@
 package ru.kornilaev.weapons;
 
 abstract class Weapon {
-    private int ammo;
-    private final int maxAmmo;
+    protected int ammo;
+    protected final int maxAmmo;
 
     public Weapon(int ammo, int maxAmmo) {
         checkNegative(ammo, maxAmmo);

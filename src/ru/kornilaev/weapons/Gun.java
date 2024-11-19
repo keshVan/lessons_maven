@@ -15,7 +15,7 @@ public class Gun extends Weapon {
     }
 
     public void shoot(){
-        if(super.getAmmo()) {
+        if(getAmmo()) {
             System.out.println("Бах!");
         }
         else System.out.println("Клац!");
