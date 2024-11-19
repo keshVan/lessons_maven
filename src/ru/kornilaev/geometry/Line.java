@@ -57,6 +57,7 @@ public class Line implements Lengthable, Brokenable{
     }
 
     @Override
+<<<<<<< HEAD
     public Line clone() {
         try {
             Line line = (Line) super.clone();
@@ -72,5 +73,9 @@ public class Line implements Lengthable, Brokenable{
     @Override
     public int hashCode() {
         return Objects.hash(start) + Objects.hashCode(end);
+=======
+    public int hashCode() {
+        return Objects.hash(start) + Objects.hash(end);
+>>>>>>> refs/remotes/origin/master
     }
 }
