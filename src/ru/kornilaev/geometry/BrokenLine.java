@@ -51,7 +51,6 @@ public class BrokenLine implements Lengthable, Brokenable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-<<<<<<< HEAD
         if (o == null || !(o instanceof BrokenLine)) return false;
         BrokenLine brokenLine = (BrokenLine) o;
         List<Line> lines1 = getLines();
@@ -69,23 +68,13 @@ public class BrokenLine implements Lengthable, Brokenable {
         for (int i = 0; i < points.size() - 1; i++)
             lines.add(new Line(points.get(i), points.get(i + 1)));
         return lines;
-=======
-        if (o == null) return false;
-        if (!(o instanceof BrokenLine)) return false;
-        BrokenLine that = (BrokenLine) o;
-        return Objects.equals(points, that.points);
->>>>>>> refs/remotes/origin/master
     }
 
     @Override
     public int hashCode() {
-<<<<<<< HEAD
         int pointsHash = 0;
         for (Point point : points)
             pointsHash += Objects.hash(point);
         return pointsHash;
-=======
-        return Objects.hash(points);
->>>>>>> refs/remotes/origin/master
     }
 }

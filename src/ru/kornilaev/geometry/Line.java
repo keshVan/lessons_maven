@@ -2,7 +2,7 @@ package ru.kornilaev.geometry;
 
 import java.util.Objects;
 
-public class Line implements Lengthable, Brokenable{
+public class Line implements Lengthable, Brokenable, Cloneable{
     private Point start = new Point();
     private Point end = new Point();
 
@@ -57,7 +57,6 @@ public class Line implements Lengthable, Brokenable{
     }
 
     @Override
-<<<<<<< HEAD
     public Line clone() {
         try {
             Line line = (Line) super.clone();
@@ -73,9 +72,6 @@ public class Line implements Lengthable, Brokenable{
     @Override
     public int hashCode() {
         return Objects.hash(start) + Objects.hashCode(end);
-=======
-    public int hashCode() {
-        return Objects.hash(start) + Objects.hash(end);
->>>>>>> refs/remotes/origin/master
     }
+
 }

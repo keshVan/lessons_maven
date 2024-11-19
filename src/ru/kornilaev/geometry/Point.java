@@ -1,16 +1,10 @@
 package ru.kornilaev.geometry;
-
-<<<<<<< HEAD
 import ru.kornilaev.math.Fraction;
 
 import java.util.Objects;
 
 public class Point implements Comparable<Point>, Cloneable {
-=======
-import java.util.Objects;
 
-public class Point implements Comparable<Point> {
->>>>>>> refs/remotes/origin/master
     int x, y;
 
     public Point(int x, int y) {
@@ -44,7 +38,6 @@ public class Point implements Comparable<Point> {
     }
 
     @Override
-<<<<<<< HEAD
     public Point clone(){
         try {
             return (Point) super.clone();
@@ -55,8 +48,6 @@ public class Point implements Comparable<Point> {
     }
 
     @Override
-=======
->>>>>>> refs/remotes/origin/master
     public int hashCode() {
         return Objects.hash(x, y);
     }
