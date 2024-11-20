@@ -43,7 +43,7 @@ public abstract class AbstractPoint {
             out.append(attributes.get(i));
             out.append(", ");
         }
-        out.append(attributes.getLast());
+        out.append(attributes.get(attributes.size() - 1));
 
 
         return out.toString();

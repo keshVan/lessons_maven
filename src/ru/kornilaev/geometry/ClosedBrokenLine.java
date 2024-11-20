@@ -19,7 +19,7 @@ public class ClosedBrokenLine extends BrokenLine {
 
     public List<Line> getLines(){
         List<Line> lines = super.getLines();
-        lines.add(new Line(points.get(0), points.getLast()));
+        lines.add(new Line(points.get(0), points.get(points.size() - 1)));
         return lines;
     }
 
