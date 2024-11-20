@@ -62,13 +62,14 @@ public class City {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public final boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || !(o instanceof City)) return false;
         City city = (City) o;
         if (roads.size() != city.roads.size()) return false;
+        if (!roads.containsAll(city.roads)) return  false;
 
-        int count = 0;
+        /*int count = 0;
         for (Road curRoad : roads) {
             for (Road road : city.roads) {
                 if (curRoad.equals(road)) {
@@ -76,18 +77,18 @@ public class City {
                     break;
                 }
             }
-        }
+        }*/
 
-        return roads.size() == count;
+        return true;
 
 
     }
 
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         int roadHash = 0;
         for (Road road : roads)
-            roadHash += road.hashCode();
+            roadHash += Objects.hashCode(road);
         return roadHash;
     }
 
