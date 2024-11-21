@@ -1,9 +1,9 @@
 package ru.kornilaev.karate;
 
-public class Punch implements Hittable {
+public class Punch implements Action {
 
     @Override
-    public void hit(String executor) {
-        System.out.println(executor + ": кия!");
+    public void make(KarateKid kid) {
+        kid.punch();
     }
 }

@@ -2,29 +2,20 @@ package ru.kornilaev.karate;
 
 public class KarateKid {
     final String name;
-    Combo combo;
-
-    public KarateKid(String name, Combo combo) {
-        this.name = name;
-        this.combo = combo;
-    }
-
     public KarateKid(String name) {
-        this(name, null);
+        this.name = name;
     }
 
-
-    public void setCombo(Combo combo) {
-        this.combo = combo;
+    public void kick() {
+        System.out.println(name + ": бац!");
     }
 
-    public void performCombo() {
-        if (combo == null) {
-            System.out.println(name + ": ничего не умеет.");
-            return;
-        }
-        for (Hittable techniques : combo.listTechniques)
-            techniques.hit(name);
+    public void punch() {
+        System.out.println(name + ": кия!");
+    }
+
+    public void jumpKick() {
+        System.out.println(name + ": вжух!");
     }
 
 }
