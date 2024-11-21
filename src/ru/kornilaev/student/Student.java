@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.Objects;
 
 public class Student {
-    private String name;
-    private  List<Integer> marks = new ArrayList<>();
+    String name;
+    List<Integer> marks = new ArrayList<>();
+
+    List<UndoAction> historyActions = new ArrayList<>();
 
     public Student(String name, int... marks) {
         checkName(name);
@@ -14,6 +16,7 @@ public class Student {
         for (int mark : marks) {
             addMark(mark);
         }
+        historyActions.add(new Create(name, marks));
     }
 
     public String getName() {
@@ -22,6 +25,7 @@ public class Student {
 
     public void setName(String name) {
         checkName(name);
+        historyActions.add(new ChangeName(this.name));
         this.name = name;
     }
 
@@ -34,6 +38,7 @@ public class Student {
         for (int mark : marks) {
             addMark(mark);
         }
+        historyActions.add(new AddMark(marks.size()));
     }
 
     private void checkName(String name) {
@@ -44,6 +49,7 @@ public class Student {
     public void addMark(int mark) throws IllegalMarkException {
         if (mark < 2 || mark > 5)
             throw new IllegalMarkException(mark);
+        historyActions.add(new AddMark(1));
         marks.add(mark);
     }
 
@@ -65,6 +71,11 @@ public class Student {
         return res > 0 ? res / marks.size() : res;
     }
 
+    public void undo() {
+        historyActions.getLast().undo();
+        historyActions.removeLast();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -81,4 +92,50 @@ public class Student {
     public boolean isExcellent() {
         return this.getAverageMarks() == 5;
     }
+
+    private class ChangeName implements UndoAction {
+        String oldName;
+
+        public ChangeName(String oldName) {
+            this.oldName = oldName;
+        }
+
+        @Override
+        public void undo() {
+            Student.this.name = oldName;
+        }
+    }
+
+    private class Create implements UndoAction {
+        String strartName;
+        List<Integer> startMark;
+
+        public Create(String strartName, int... startMarks) {
+            this.strartName = strartName;
+            for (int mark : startMarks) {
+                startMark.add(mark);
+            }
+        }
+
+        @Override
+        public void undo() {
+            Student.this.name = strartName;
+            Student.this.marks = startMark;
+        }
+    }
+
+    private class AddMark implements UndoAction {
+        int addedMarks;
+
+        public AddMark(int addedMarks) {
+            this.addedMarks = addedMarks;
+        }
+
+        @Override
+        public void undo() {
+            for (int i = 0; i < addedMarks; i++)
+                marks.removeLast();
+        }
+    }
+
 }
