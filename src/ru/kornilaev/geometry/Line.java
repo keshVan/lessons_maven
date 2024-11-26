@@ -1,38 +1,32 @@
 package ru.kornilaev.geometry;
 
+
+import java.util.List;
 import java.util.Objects;
 
-public class Line implements Lengthable, Brokenable, Cloneable{
-    private Point start = new Point();
-    private Point end = new Point();
+public class Line<T extends Point> implements Lengthable, Brokenable, Cloneable{
+    private T start, end;
+    private static final int TWO_DIMENSION = 2;
 
-    public Line(Point start, Point end) {
-        this(start.x, start.y, end.x, end.y);
+    public Line(T start, T end) {
+        this.start = (T) start.clone();
+        this.end = (T) end.clone();
     }
 
-    public Line(int x1, int y1, int x2, int y2) {
-        this.start.x = x1;
-        this.start.y = y1;
-        this.end.x = x2;
-        this.end.y = y2;
-    }
-
-    public Point getStart() {
+    public T getStart() {
         return start;
     }
 
-    public void setStart(Point start) {
-        this.start.x = start.x;
-        this.start.y = start.y;
+    public void setStart(T start) {
+        this.start = (T) start.clone();
     }
 
-    public Point getEnd() {
+    public T getEnd() {
         return end;
     }
 
-    public void setEnd(Point end) {
-        this.end.x = end.x;
-        this.end.y = end.y;
+    public void setEnd(T end) {
+        this.end = (T) end.clone();
     }
 
     public String toString() {
@@ -40,7 +34,11 @@ public class Line implements Lengthable, Brokenable, Cloneable{
     }
 
     public double length() {
-        return Math.sqrt( Math.pow(end.x - start.y, 2) + Math.pow(end.x - start.y, 2) );
+        List<Integer> coordsStart = start.getCoords();
+        List<Integer> coordsEnd = end.getCoords();
+        if (coordsStart.size() == TWO_DIMENSION)
+            return Math.sqrt( Math.pow(coordsEnd.get(0) - coordsStart.get(0), 2) + Math.pow(coordsEnd.get(1) - coordsStart.get(1), 2) );
+        return Math.sqrt( Math.pow(coordsEnd.get(0) - coordsStart.get(0), 2) + Math.pow(coordsEnd.get(1) - coordsStart.get(1), 2) + Math.pow(coordsEnd.get(2) - coordsStart.get(2), 2)  );
     }
 
     @Override

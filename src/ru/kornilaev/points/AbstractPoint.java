@@ -1,4 +1,4 @@
-package ru.kornilaev.geometry;
+package ru.kornilaev.points;
 
 import java.util.ArrayList;
 import java.util.Arrays;

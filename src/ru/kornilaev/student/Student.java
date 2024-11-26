@@ -3,8 +3,9 @@ package ru.kornilaev.student;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import ru.kornilaev.generics.Comparable;
 
-public class Student {
+public class Student implements Comparable<Student> {
     String name;
     List<Integer> marks = new ArrayList<>();
 
@@ -93,6 +94,13 @@ public class Student {
         return this.getAverageMarks() == 5;
     }
 
+    @Override
+    public int compare(Student obj) {
+        if (getAverageMarks() > obj.getAverageMarks()) return 1;
+        if (getAverageMarks() < obj.getAverageMarks()) return -1;
+        return 0;
+    }
+
     private class ChangeName implements UndoAction {
         String oldName;
 
@@ -108,7 +116,7 @@ public class Student {
 
     private class Create implements UndoAction {
         String strartName;
-        List<Integer> startMark;
+        List<Integer> startMark = new ArrayList<>();
 
         public Create(String strartName, int... startMarks) {
             this.strartName = strartName;

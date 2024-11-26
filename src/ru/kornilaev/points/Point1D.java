@@ -1,4 +1,4 @@
-package ru.kornilaev.geometry;
+package ru.kornilaev.points;
 
 public class Point1D extends AbstractPoint {
     private static final int DIMENSION = 1;

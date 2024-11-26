@@ -1,4 +1,4 @@
-package ru.kornilaev.geometry;
+package ru.kornilaev.points;
 
 public abstract class Attribute {
     protected String name;

@@ -1,4 +1,4 @@
-package ru.kornilaev.geometry;
+package ru.kornilaev.points;
 
 public class TimeAttribute extends Attribute{
     public TimeAttribute(String value) {

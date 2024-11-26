@@ -1,6 +1,8 @@
 package ru.kornilaev.geometry;
 import ru.kornilaev.math.Fraction;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Point implements Comparable<Point>, Cloneable {
@@ -18,6 +20,9 @@ public class Point implements Comparable<Point>, Cloneable {
         this(p.x, p.y);
     }
 
+    public List<Integer> getCoords() {
+        return new ArrayList<>(List.of(x, y));
+    }
 
     public String toString() {
         return "{" + x + ";" + y + "}";

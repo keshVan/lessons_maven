@@ -1,39 +1,43 @@
 package ru.kornilaev.geometry;
 
-public class Point3D extends AbstractPoint {
-    private static final int DIMENSION = 3;
-    private static final int INDEX_X = 0;
-    private static final int INDEX_Y = 1;
-    private static final int INDEX_Z = 2;
+import java.util.List;
+import java.util.Objects;
 
-    public Point3D(int x, int y, int z, Attribute... attributes) {
-        super(DIMENSION, attributes);
-        coordinates[INDEX_X] = x;
-        coordinates[INDEX_Y] = y;
-        coordinates[INDEX_Z] = z;
+public class Point3D extends Point {
+    int z;
+
+    public Point3D(int x, int y, int z) {
+        super(x, y);
+        this.z = z;
     }
 
-    public int getX() {
-        return coordinates[INDEX_X];
+    public String toString() {
+        return "{" + x + ";" + y + ";" + z + "}";
     }
 
-    public int getY() {
-        return coordinates[INDEX_Y];
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Point3D point = (Point3D) o;
+        return x == point.x && y == point.y && z == point.z;
     }
 
-    public int getZ() {
-        return coordinates[INDEX_Z];
+    @Override
+    public Point3D clone(){
+        Point3D p = (Point3D) super.clone();
+        p.z = z;
+        return p;
     }
 
-    public void setX(int x) {
-        coordinates[INDEX_X] = x;
+    @Override
+    public List<Integer> getCoords() {
+        List<Integer> res = super.getCoords();
+        res.add(z);
+        return res;
     }
 
-    public void setY(int y) {
-        coordinates[INDEX_Y] = y;
-    }
-
-    public void setZ(int z) {
-        coordinates[INDEX_Z] = z;
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y, z);
     }
 }
