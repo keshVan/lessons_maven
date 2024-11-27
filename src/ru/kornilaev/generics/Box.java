@@ -4,13 +4,14 @@ public class Box<T> {
     T object;
 
     public T get() {
+        if (isEmpty()) return null;
         T tmp = object;
         object = null;
         return tmp;
     }
 
     public void set(T object) {
-        if (this.object != null) throw new IllegalArgumentException("box isn't empty");
+        if (!isEmpty()) throw new IllegalArgumentException("box isn't empty");
         this.object = object;
     }
 

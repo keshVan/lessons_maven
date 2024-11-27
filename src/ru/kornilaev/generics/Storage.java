@@ -1,16 +1,25 @@
 package ru.kornilaev.generics;
 
 public class Storage<T> {
-    final T object, defaultValue;
+    final T value;
+    final static Storage EMPTY_STORAGE = new Storage<>(null);
 
-    public Storage(T object, T defaultValue) {
-        this.object = object;
-        this.defaultValue = defaultValue;
+    private Storage(T object) {
+        this.value = object;
     }
 
-    public T getObject() {
-        if (object == null)
+    public T getObject(T defaultValue) {
+        if (value == null)
             return defaultValue;
-        return object;
+        return value;
+    }
+
+    public static Storage empty() {
+        return EMPTY_STORAGE;
+    }
+
+    public static <T> Storage<T> of(T el) {
+        if (el == null) return empty();
+        return new Storage<>(el);
     }
 }
