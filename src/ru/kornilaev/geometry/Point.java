@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class Point implements Comparable<Point>, Cloneable {
 
-    int x, y;
+    public int x, y;
 
     public Point(int x, int y) {
         this.x = x;
