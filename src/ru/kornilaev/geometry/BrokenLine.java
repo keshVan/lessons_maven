@@ -2,7 +2,7 @@ package ru.kornilaev.geometry;
 
 import java.util.*;
 
-public class BrokenLine implements Lengthable, Brokenable {
+public class BrokenLine /*implements Lengthable, Brokenable*/ {
     protected List<Point> points = new ArrayList<>();
 
     public BrokenLine(Point... points) {
@@ -30,7 +30,7 @@ public class BrokenLine implements Lengthable, Brokenable {
         this.points.addAll(points);
     }
 
-    public double length() {
+   /* public double length() {
         int res = 0;
 
         for (int i = 0; i < points.size() - 1; i++) {
@@ -38,28 +38,28 @@ public class BrokenLine implements Lengthable, Brokenable {
         }
 
         return res;
-    }
+    }*/
 
     public BrokenLine getBrokenLine() {
         return this;
     }
 
-    @Override
-    public final boolean equals(Object o) {
+   /* public final boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof BrokenLine brokenLine)) return false;
         List<Line> lines1 = getLines();
         List<Line> lines2 = brokenLine.getLines();
         if (lines1.size() != lines2.size()) return false;
-        return lines1.equals(lines2) || lines1.equals(brokenLine.getLines().reversed());
-    }
+        //return lines1.equals(lines2) || lines1.equals(brokenLine.getLines().reversed());
+        return true;
+    }*/
 
-    public List<Line> getLines(){
+    /*public List<Line> getLines(){
         List<Line> lines = new ArrayList<>();
         for (int i = 0; i < points.size() - 1; i++)
             lines.add(new Line(points.get(i), points.get(i + 1)));
         return lines;
-    }
+    }*/
 
     @Override
     public int hashCode() {
