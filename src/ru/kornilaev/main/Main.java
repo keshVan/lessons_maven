@@ -79,27 +79,43 @@ public class Main {
         System.out.println(newListOfArrays2);
         System.out.println("6.3.3-------------------------------------");
 
-        String string = reduction(stringList, (a) -> {
+        /*String string = reduction(stringList, (a) -> {
             String res = "";
             for (String s : a)
                 res += s;
             return res;
         });
-        System.out.println(string);
+        System.out.println(string);*/
 
-        int sum = reduction(integerList, (a) -> {
+        /*int sum = reduction(integerList, (a) -> {
             int res = 0;
             for (int i : a)
                 res += i;
             return res;
         });
-        System.out.println(sum);
+        System.out.println(sum);*/
 
 
-        int res = reduction(listOfArrays, new Reductiable<>(){
-        });
+        //int res = reduction(listOfArrays, new Reductiable<>(){
+        //});
+        System.out.println("-----------------------------------------");
+        System.out.println(find(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9}));
+        System.out.println(find(new int[]{1, 2, 2, 4, 5, 6, 4, 8, 1}));
+        System.out.println(find(new int[]{9, 4, 9, 6, 7, 4, 5}));
+
+    }
 
 
+    public static int find(int[] arr) {
+        List<Integer> list = new ArrayList<>();
+        list.add(arr[0]);
+        for (int i = 1; i < arr.length; i++) {
+            if (list.contains(arr[i]))
+                list.remove((Integer) arr[i]);
+            else
+                list.add(arr[i]);
+        }
+        return list.get(0);
     }
 
     public static void shiftLine(Line<? extends Point> line) {
@@ -143,12 +159,14 @@ public class Main {
             if(a.test(el))
                 res.add(el);
         return res;
-        Supplier
     }
 
-    public static <T> T reduction(List<T> list, Reductiable<T> a) {
-        return a.reduct(list);
-    }
+    /*public static <T> T reduction(List<T> list, Reductiable<T> a) {
+        T res = a.reduct(list.get(0));
+        for (int i = 1; i < list.size() - 1; i++) {
+            //...
+        }
+    }*/
 }
 
 interface Appliable<T, P> {
@@ -160,17 +178,8 @@ interface Testable<T> {
 }
 
 interface Reductiable<T> {
-    T reduct(List<T> el);
+    T reduct(T el);
 }
 
-
-
-
-/*class ToPositive<T extends Number> implements Appliable<T, T> {
-    @Override
-    public T apply(Number el) {
-        return (T) Math.abs(el.doubleValue());
-    }
-}*/
 
 
