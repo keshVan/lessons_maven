@@ -5,98 +5,17 @@ import ru.kornilaev.math.Fraction;
 import ru.kornilaev.geometry.*;
 
 import java.util.*;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) {
-
-        Line<Point3D> line = Line.of(new Point3D(1, 1, 1), new Point3D(2, 2, 2));
+        List<Point> points = new ArrayList<>(List.of(new Point(1, 2), new Point(3, 4), new Point(5, 6)));
+        BrokenLine line = DataStream.of(points)
+                .filter((p) -> p.x > 1)
+                .map((p) -> p.x += 10)
+                .collect(BrokenLine::new, (l, p) -> l.addPoint(p));
         System.out.println(line);
-        shiftLine(line);
-        System.out.println(line);
-        Line<Point> line2 = Line.of(new Point(-5, 1), new Point(1, 2));
-        System.out.println(line2);
-        shiftLine(line2);
-        System.out.println(line2);
-        System.out.println("-------------------------------------");
-
-        Box<Fraction> fractionBox = new Box<>();
-        fractionBox.set(new Fraction(7,4));
-
-        Box<Integer> integerBox = new Box<>();
-        integerBox.set(5);
-
-        Box<Double> doubleBox = new Box<>();
-        doubleBox.set(3.2);
-
-        System.out.println(sumBoxes(fractionBox, integerBox, doubleBox));
-        System.out.println("-------------------------------------");
-
-        Box<Integer> box2 = new Box<>();
-        putPoint(box2);
-        System.out.println(box2.get());
-        System.out.println("-------------------------------------");
-        List<Number> list3 = new ArrayList<>();
-        fillList(list3);
-        System.out.println(list3);
-
-        System.out.println("6.3.1-------------------------------------");
-
-        List<String> stringList = new ArrayList<>(List.of("qwerty", "asdfg", "zx"));
-        List<Integer> stringLengths = map(stringList, a -> a.length());
-        System.out.println(stringLengths);
-
-        List<Integer> integerList = new ArrayList<>(List.of(1, -3, 7));
-        List<Integer> newIntegerList = map(integerList, a -> Math.abs(a));
-        System.out.println(newIntegerList);
-
-
-        List<int[]> listOfArrays = new ArrayList<>(List.of(new int[]{1, 5, 7}, new int[]{23, -5, 1}, new int[]{-9, 1, 3}));
-        List<Integer> newListOfArrays = map(listOfArrays, (a) -> {
-            int max = a[0];
-            for (int i = 0; i < a.length; i++)
-                if (max < a[i]) max = a[i];
-            return max;
-        });
-        System.out.println(newListOfArrays);
-
-        System.out.println("6.3.2-------------------------------------");
-
-        List<String> newStringList = filter(stringList, a -> a.length() < 3);
-        System.out.println(newStringList);
-
-        newIntegerList = filter(integerList, a -> a > 0);
-        System.out.println(newIntegerList);
-
-        List<List<Integer>> lists = new ArrayList<>(List.of(List.of(1, -5, 7), List.of(-23, -5, -1), List.of(-9, 1, 3)));
-        List<List<Integer>> newListOfArrays2 = filter(lists, (a) -> {
-            for (int i : a)
-                if (i > 0) return false;
-            return true;
-        } );
-        System.out.println(newListOfArrays2);
-        System.out.println("6.3.3-------------------------------------");
-
-        String string = reduce(stringList, (a) -> {
-            String res = "";
-            for (String s : a)
-                res += s;
-            return res;
-        });
-        System.out.println(string);
-
-        int sum = reduce(integerList, (a) -> {
-            int res = 0;
-            for (int i : a)
-                res += i;
-            return res;
-        });
-        System.out.println(sum);
-
-
-        /*int res = reduction(listOfArrays, new Reductiable<>(){
-        });*/
-
-
     }
 
     public static void shiftLine(Line<? extends Point> line) {
@@ -126,47 +45,10 @@ public class Main {
         for (int i = 1; i < 101; i ++)
             list.add(i);
     }
-
-    public static <T, P> List<P> map(List<T> list, Applier<T, P> a) {
-        List<P> res = new ArrayList<>();
-        for (T el : list)
-            res.add(a.apply(el));
-        return res;
-    }
-
-    public static <T> List<T> filter(List<T> list, Tester<T> a) {
-        List<T> res = new ArrayList<>();
-        for (T el : list)
-            if(a.test(el))
-                res.add(el);
-        return res;
-    }
-
-    public static <T> T reduce(List<T> list, Reductor<T> a) {
-        return a.reduct(list);
-    }
-}
-
-interface Applier<T, P> {
-    P apply(T el);
-}
-
-interface Tester<T> {
-    boolean test(T el);
-}
-
-interface Reductor<T> {
-    T reduct(List<T> el);
 }
 
 
 
 
-/*class ToPositive<T extends Number> implements Appliable<T, T> {
-    @Override
-    public T apply(Number el) {
-        return (T) Math.abs(el.doubleValue());
-    }
-}*/
 
 

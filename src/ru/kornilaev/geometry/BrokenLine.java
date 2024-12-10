@@ -30,6 +30,10 @@ public class BrokenLine /*implements Lengthable, Brokenable*/ {
         this.points.addAll(points);
     }
 
+    public void addPoint(Point p) {
+        this.points.add(p);
+    }
+
    /* public double length() {
         int res = 0;
 
