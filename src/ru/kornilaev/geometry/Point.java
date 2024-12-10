@@ -41,7 +41,9 @@ public class Point implements Comparable<Point>, Cloneable {
         Point point = (Point) o;
         return x == point.x && y == point.y;
     }
-
+    public double distanceTo(Point p){
+        return 0;
+    }
     @Override
     public Point clone(){
         try {

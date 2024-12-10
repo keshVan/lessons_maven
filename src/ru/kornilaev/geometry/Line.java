@@ -8,9 +8,17 @@ public class Line<T extends Point> implements Lengthable, Brokenable, Cloneable{
     private T start, end;
     private static final int TWO_DIMENSION = 2;
 
-    public Line(T start, T end) {
+    private Line(T start, T end) {
         this.start = (T) start.clone();
         this.end = (T) end.clone();
+    }
+
+    public static final Line<Point> of(int x1, int y1, int x2, int y2) {
+        return new Line<>(new Point(x1, y1), new Point(x2, y2));
+    }
+
+    public static final <V extends Point> Line<V> of(V p1, V p2){
+        return new Line<>(p1, p2);
     }
 
     public T getStart() {
@@ -34,11 +42,7 @@ public class Line<T extends Point> implements Lengthable, Brokenable, Cloneable{
     }
 
     public double length() {
-        List<Integer> coordsStart = start.getCoords();
-        List<Integer> coordsEnd = end.getCoords();
-        if (coordsStart.size() == TWO_DIMENSION)
-            return Math.sqrt( Math.pow(coordsEnd.get(0) - coordsStart.get(0), 2) + Math.pow(coordsEnd.get(1) - coordsStart.get(1), 2) );
-        return Math.sqrt( Math.pow(coordsEnd.get(0) - coordsStart.get(0), 2) + Math.pow(coordsEnd.get(1) - coordsStart.get(1), 2) + Math.pow(coordsEnd.get(2) - coordsStart.get(2), 2)  );
+        return start.distanceTo(end);
     }
 
     @Override
@@ -55,11 +59,11 @@ public class Line<T extends Point> implements Lengthable, Brokenable, Cloneable{
     }
 
     @Override
-    public Line clone() {
+    public Line<T> clone() {
         try {
-            Line line = (Line) super.clone();
-            line.start = start.clone();
-            line.end = end.clone();
+            Line<T> line = (Line<T>) super.clone();
+            line.start = (T)start.clone();
+            line.end = (T)end.clone();
             return line;
         }
         catch (CloneNotSupportedException e) {
