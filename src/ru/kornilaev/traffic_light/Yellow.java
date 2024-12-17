@@ -1,6 +1,7 @@
 package ru.kornilaev.traffic_light;
 
 public class Yellow implements State{
+    final String color = "Желтый";
     State prev;
 
     public Yellow(State prev) {
@@ -17,6 +18,6 @@ public class Yellow implements State{
 
     @Override
     public String getColor() {
-        return "Желтый";
+        return color;
     }
 }

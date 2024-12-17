@@ -1,6 +1,7 @@
 package ru.kornilaev.traffic_light;
 
 public class Red implements State {
+    final String color = "Красный";
 
     @Override
     public void next(TrafficLight tf) {
@@ -9,6 +10,6 @@ public class Red implements State {
 
     @Override
     public String getColor() {
-        return "Красный";
+        return color;
     }
 }
