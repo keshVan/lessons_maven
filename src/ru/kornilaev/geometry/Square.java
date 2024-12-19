@@ -1,10 +1,11 @@
 package ru.kornilaev.geometry;
 
-public class Square extends Rectangle implements Brokenable {
-
+public class Square implements Brokenable {
+    Point sp;
+    int side;
     public Square(Point startPoint, int sideLength) {
-        super(startPoint, sideLength, sideLength);
-        checkPositive(sideLength);
+        this.sp = startPoint;
+        this.side = sideLength;
     }
 
     public Square(int x1, int y1, int sideLength) {
@@ -12,12 +13,21 @@ public class Square extends Rectangle implements Brokenable {
     }
 
     public int getSide() {
-        return super.getSide1();
+        return side;
     }
 
     public void setSide(int sideLength) {
         checkPositive(sideLength);
-        super.setSide1(sideLength);
+        side = sideLength;
+    }
+
+    public double area() {
+        System.out.println("calculating");
+        return side * side;
+    }
+
+    public Point getStartPoint() {
+        return sp;
     }
 
     private void checkPositive(int sideLength) {
@@ -26,10 +36,10 @@ public class Square extends Rectangle implements Brokenable {
     }
 
     public String toString() {
-        return "Квадрат в точке " + super.getStartPoint() + " со стороной " + getSide();
+        return "Квадрат в точке " + sp + " со стороной " + getSide();
     }
 
     public BrokenLine getBrokenLine() {
-        return new ClosedBrokenLine(super.getStartPoint(), new Point(super.getStartPoint().x + getSide(), super.getStartPoint().y), new Point(super.getStartPoint().x + getSide(), super.getStartPoint().y - getSide() ), new Point(super.getStartPoint().x, super.getStartPoint().y - getSide()));
+        return new ClosedBrokenLine(sp, new Point(sp.x + getSide(), sp.y), new Point(sp.x + getSide(), sp.y - getSide() ), new Point(sp.x, sp.y - getSide()));
     }
 }
