@@ -8,6 +8,7 @@ import ru.kornilaev.generics.Comparable;
 public class Student implements Comparable<Student> {
     String name;
     List<Integer> marks = new ArrayList<>();
+    Group group;
 
     List<UndoAction> historyActions = new ArrayList<>();
 
@@ -42,14 +43,23 @@ public class Student implements Comparable<Student> {
         historyActions.add(new AddMark(marks.size()));
     }
 
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        if (group != null) group.addStudent(this);
+        this.group = group;
+    }
+
     private void checkName(String name) {
         if (name == null || name.isBlank())
             throw new IllegalArgumentException("name cannot be null or empty");
     }
 
     public void addMark(int mark) throws IllegalMarkException {
-        if (mark < 2 || mark > 5)
-            throw new IllegalMarkException(mark);
+        /*if (mark < 2 || mark > 5)
+            throw new IllegalMarkException(mark);*/
         historyActions.add(new AddMark(1));
         marks.add(mark);
     }

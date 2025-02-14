@@ -2,8 +2,10 @@ package ru.kornilaev.geometry;
 
 import java.util.*;
 
-public class BrokenLine /*implements Lengthable, Brokenable*/ {
+public class BrokenLine  {
     protected List<Point> points = new ArrayList<>();
+
+    public BrokenLine() {}
 
     public BrokenLine(Point... points) {
         for (Point p : points)
