@@ -6,18 +6,17 @@ import java.util.Objects;
 
 public class Line<T extends Point> implements Lengthable, Brokenable, Cloneable{
     private T start, end;
-    private static final int TWO_DIMENSION = 2;
 
     private Line(T start, T end) {
         this.start = (T) start.clone();
         this.end = (T) end.clone();
     }
 
-    public static final Line<Point> of(int x1, int y1, int x2, int y2) {
+    public static Line<Point> of(int x1, int y1, int x2, int y2) {
         return new Line<>(new Point(x1, y1), new Point(x2, y2));
     }
 
-    public static final <V extends Point> Line<V> of(V p1, V p2){
+    public static <V extends Point> Line<V> of(V p1, V p2){
         return new Line<>(p1, p2);
     }
 

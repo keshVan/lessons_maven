@@ -30,6 +30,11 @@ public class Point3D extends Point {
     }
 
     @Override
+    public double distanceTo(Point p) {
+        return super.distanceTo(p);
+    }
+
+    @Override
     public List<Integer> getCoords() {
         List<Integer> res = super.getCoords();
         res.add(z);

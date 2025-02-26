@@ -3,32 +3,34 @@ package ru.kornilaev.human;
 public class Human {
     private Name name;
     private int height;
+    private int age;
     private Human father;
 
-    public Human(String name, int height) {
-        this(name, height, null);
+    public Human(String name, int height, int age) {
+        this(name, height, null, age);
     }
 
-    public Human(String name, int height, Human father) {
-        this(new Name(name), height, father);
+    public Human(String name, int height, Human father, int age) {
+        this(new Name(name), height, father, age);
     }
 
-    public Human(Name name, int height) {
-        this(name, height, null);
+    public Human(Name name, int height, int age) {
+        this(name, height, null, age);
     }
 
-    public Human(Name name, int height, Human father) {
+    public Human(Name name, int height, Human father, int age) {
         this.name = name;
         if (father != null) {
             if(name.getLastName() == null && father.name.getLastName() != null) name.setLastName(father.name.getLastName());
             if(name.getPatronymic() == null)  name.setPatronymic(formatPatronymic(father.name.getFirstName()));
         }
         this.height = height;
+        this.age = age;
     }
 
-    public Human(Human h) {
-        this(h.name, h.height, h.father);
-    }
+    /*public Human(Human h) {
+        this(h.name, h.height, h.father.getHeight());
+    }*/
 
     public Name getName() {
         return new Name(name);
@@ -46,9 +48,13 @@ public class Human {
         this.height = height;
     }
 
-    public Human getFather() {
-        return new Human(father);
+    public int getAge() {
+        return age;
     }
+
+    /*public Human getFather() {
+        return new Human(father);
+    }*/
 
     public void setFather(Human father) {
         this.father = father;

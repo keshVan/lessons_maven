@@ -14,11 +14,11 @@ public class Point implements Comparable<Point>, Cloneable {
         this.y = y;
     }
 
-    public Point(){};
+    //public Point(){};
 
-    public Point(Point p) {
+    /*public Point(Point p) {
         this(p.x, p.y);
-    }
+    }*/
 
     public List<Integer> getCoords() {
         return new ArrayList<>(List.of(x, y));
@@ -42,7 +42,7 @@ public class Point implements Comparable<Point>, Cloneable {
         return x == point.x && y == point.y;
     }
     public double distanceTo(Point p){
-        return 0;
+        return Math.sqrt(Math.pow(p.x - x, 2) +  Math.pow(p.y - y, 2));
     }
     @Override
     public Point clone(){
