@@ -1,7 +1,6 @@
-package ru.kornilaev.main;
+package ru.kornilaev.reflection;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Constructor;

@@ -1,57 +1,34 @@
 package ru.kornilaev.main;
 
-import java.io.IOException;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
 import java.util.*;
 
 import ru.kornilaev.geometry.*;
 import ru.kornilaev.human.Human;
-import ru.kornilaev.student.Student;
+import ru.kornilaev.human.ValidateException;
+import ru.kornilaev.reflection.*;
 
 class Main {
-    public static void main(String[] args) throws NoSuchMethodException {
-        /*----8.1.2----*/
-        Line<Point> line1 = Line.of(1, 2, 3, 4);
-        Line<Point> line2 = Line.of(3, 4, 5, 6);
-        System.out.println(line1.getEnd() == line2.getStart());
-        try {
-            lineConnector(line1, line2);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
-        System.out.println(line1.getEnd() == line2.getStart());
-        System.out.println();
-
-        /*----8.1.3----*/
-        B b = new B();
-        System.out.println(b);
-        System.out.println();
-
-        /*----8.1.4---*/
-        Human h = new Human("иван", 175, 70);
-        try {
-            validate(h, HumanTests.class);
-        } catch (InvocationTargetException | IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
-        System.out.println();
-
+    public static void main(String[] args) {
         /*----8.1.4---5*/
+        /*
         ObjectsWriter ow = new ObjectsWriter("C's.txt");
         ObjectsReader<Point> or = new ObjectsReader<>("C's.txt");
         List<Point> cc = null;
         try {
-            ow.write(List.of(new C("hello", "world"), new C("go", "lang"), new C("peter", "griffin")));
+            ow.write(List.of(/new C("hello", "world"), new C("go", "lang"), new C("peter", "griffin")));
             cc = or.read();
         }
         catch (IOException e) {
             throw new RuntimeException(e);
         }
-        System.out.println(cc);
+        System.out.println(cc);*/
+
+        Human h1 = new Human("ваня", 150, 25);
+        Human h2 = new Human("иван", 150, 25);
+        Human h3 = new Human("петр", 10, 25);
+        validate(h1, h2, h3);
     }
 
     public static List<Field> fieldCollection(Class<?> clazz) {
@@ -71,86 +48,69 @@ class Main {
         start2.set(line2, end1.get(line1));
     }
 
-    public static void validate(Object o, Class<?> tester) throws InvocationTargetException, IllegalAccessException {
-        Method[] tests = tester.getDeclaredMethods();
-        for (Method m : tests) {
-            m.setAccessible(true);
-            if (!(boolean)m.invoke(null, o))
-                throw new ValidateException("ошибка в " + m.getName() + ": " + m.getAnnotation(ErrorMessage.class).value());
-        }
-    }
-}
-
-abstract class Entity {
-    @Override
-    public String toString() {
-        Class<?> clazz = this.getClass();
-        StringBuilder sb = new StringBuilder(clazz.getSimpleName()+"{");
-
-        while (clazz != null) {
-            Field[] fields = clazz.getDeclaredFields();
-            for (Field f : fields) {
-                f.setAccessible(true);
-                try {
-                    sb.append(f.getName()).append("=").append(f.get(this)).append(",").append(" ");
-                } catch (IllegalAccessException e) {
-                    sb.append(f.getName()).append("=").append("err").append(",").append(" ");
+    public static void validate(Object... objects) {
+        for (Object o : objects) {
+            Class<?> clazz = o.getClass();
+            Annotation[] annotations = clazz.getAnnotations();
+            Validate annotation = null;
+            for (Annotation a : annotations) {
+                if (a instanceof Validate v) {
+                    annotation = v;
+                    break;
+                }
+                Class<?> curAnn = a.annotationType();
+                if (curAnn.isAnnotationPresent(Validate.class)) {
+                    annotation = curAnn.getAnnotation(Validate.class);
+                    break;
                 }
             }
-            clazz = clazz.getSuperclass();
+            if (annotation == null) {
+                throw new ValidateException(clazz.getSimpleName() + " not annotated with Validate annotation or its aliases");
+            }
+
+            Class<?>[] testClasses = annotation.value();
+            for (Class<?> testClass : testClasses) {
+                Constructor<?> constructor = null;
+                Object test = null;
+                List<Method> tests = Arrays.stream(testClass.getDeclaredMethods())
+                        .filter(m -> m.getParameterCount() == 1)
+                        .filter(m -> m.getParameterTypes()[0].isAssignableFrom(clazz))
+                        .peek(m -> m.setAccessible(true))
+                        .toList();
+
+                try {
+                    constructor = testClass.getDeclaredConstructor();
+                    constructor.setAccessible(true);
+                    test = constructor.newInstance();
+                    for (Method m : tests) {
+                        m.invoke(test, o);
+                    }
+                }
+                catch (InvocationTargetException e) {
+                    if (e.getCause() instanceof ValidateException ve) {
+                        throw ve;
+                    }
+                    throw new RuntimeException(e);
+                }
+                catch (NoSuchMethodException | InstantiationException | IllegalAccessException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         }
-        sb.replace(sb.length() - 2, sb.length() - 1, "}");
-        return sb.toString();
     }
 }
+
 
 class A extends Entity {
     String s = "hello";
+    @ToString(false)
     int x = 42;
 }
 
-class B extends  A {
+class B extends A {
     String text = "B";
 }
 
 
-class HumanTests {
-    @ErrorMessage("рост человека не в диапазоне от 50 до 250")
-    public static boolean test1(Human h) {
-        return h.getHeight() >= 50 && h.getHeight() <= 250;
-    }
 
-    @ErrorMessage("возраст человека не в диапазоне от 1 до 200")
-    public static boolean test2(Human h) {
-        return h.getAge() >= 1 && h.getAge() <= 200;
-    }
-}
 
-class ValidateException extends RuntimeException {
-    public ValidateException(String value) {
-        super(value);
-    }
-}
-
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
-@interface ErrorMessage {
-    String value();
-}
-
-class C {
-    String field1;
-    String field2;
-
-    public C(){}
-
-    public C(String f1, String f2) {
-        field1 = f1;
-        field2 = f2;
-    }
-
-    @Override
-    public String toString() {
-        return "{" + field1 + ";" + field2 + "}";
-    }
-}

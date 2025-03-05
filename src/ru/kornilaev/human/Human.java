@@ -1,5 +1,9 @@
 package ru.kornilaev.human;
 
+import ru.kornilaev.reflection.AValidate;
+import ru.kornilaev.reflection.Validate;
+
+@AValidate
 public class Human {
     private Name name;
     private int height;

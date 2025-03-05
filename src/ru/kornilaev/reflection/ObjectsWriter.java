@@ -1,13 +1,10 @@
-package ru.kornilaev.main;
+package ru.kornilaev.reflection;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 public class ObjectsWriter {
     private final String fileName;
