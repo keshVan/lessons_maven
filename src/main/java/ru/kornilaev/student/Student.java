@@ -3,22 +3,30 @@ package ru.kornilaev.student;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Predicate;
+
 import ru.kornilaev.generics.Comparable;
 
 public class Student implements Comparable<Student> {
     String name;
     List<Integer> marks = new ArrayList<>();
     Group group;
+    Predicate<Integer> rule;
 
     List<UndoAction> historyActions = new ArrayList<>();
 
-    public Student(String name, int... marks) {
+    public Student(String name, Predicate<Integer> rule, int... marks) {
         checkName(name);
         this.name = name;
+        this.rule = rule;
         for (int mark : marks) {
             addMark(mark);
         }
         historyActions.add(new Create(name, marks));
+    }
+
+    public Student(Predicate<Integer> rule) {
+        this(null, rule, null);
     }
 
     public String getName() {
@@ -58,8 +66,8 @@ public class Student implements Comparable<Student> {
     }
 
     public void addMark(int mark) throws IllegalMarkException {
-        /*if (mark < 2 || mark > 5)
-            throw new IllegalMarkException(mark);*/
+        if (!rule.test(mark))
+            throw new IllegalMarkException(mark);
         historyActions.add(new AddMark(1));
         marks.add(mark);
     }
