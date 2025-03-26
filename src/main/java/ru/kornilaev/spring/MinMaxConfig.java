@@ -4,9 +4,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class StreamerConfig {
+public class MinMaxConfig {
     @Bean
-    Streamer streamer() {
-        return new Streamer();
+    int min() {
+        return 5;
+    }
+
+    @Bean
+    int max() {
+        return 10;
     }
 }

@@ -9,8 +9,6 @@ public class Feedback implements Comparable<Feedback> {
         this.rating = rating;
     }
 
-
-
     @Override
     public String toString() {
         return text + ". Оценка: " + rating;

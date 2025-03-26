@@ -1,12 +1,17 @@
 package ru.kornilaev.student;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import java.util.function.Predicate;
 
+@Component
 public class StudentFactory {
     private final Predicate<Integer> rule;
 
-    public StudentFactory(Predicate<Integer> rule) {
-        this.rule = rule;
+    @Autowired
+    public StudentFactory(Predicate<Integer> range) {
+        this.rule = range;
     }
 
     public Student newStudent(String name, int... marks) {

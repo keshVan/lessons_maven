@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
 import ru.kornilaev.student.Student;
 import ru.kornilaev.student.StudentFactory;
-import ru.kornilaev.weapons.Gunslinger;
 
 import java.util.*;
 import java.util.function.Predicate;
@@ -19,24 +18,15 @@ public class BeanConfig {
         return "Hello World!";
     }
 
-    @Bean
-    int min() {
-        return 5;
-    }
 
-    @Bean
-    int max() {
-        return 10;
-    }
-
-    @Bean
+   /* @Bean
     @Scope("prototype")
     int random(@Qualifier("min") int min, @Qualifier("max") int max, @Qualifier("numbers") List<Integer> numbers) {
         Random rnd = new Random();
         if (numbers.isEmpty())
             fillNumbers(min, max, numbers);
         return numbers.remove(rnd.nextInt(numbers.size()));
-    }
+    }*/
 
     @Bean
     List<Integer> numbers(@Qualifier("min") int min, @Qualifier("max") int max) {
@@ -86,6 +76,7 @@ public class BeanConfig {
 
     @Bean
     @Scope("prototype")
+    @Lazy
     Feedback bestFeedback(@Qualifier("feedbacks") List<Feedback> feedbacks) {
         return feedbacks.stream()
                 .max(Comparator.naturalOrder())
@@ -105,10 +96,5 @@ public class BeanConfig {
     @Bean
     Student std2(Predicate<Integer> range) {
         return new Student("вася", range, 5, 5, 5);
-    }
-
-    @Bean
-    StudentFactory sf(Predicate<Integer> range) {
-        return new StudentFactory(range);
     }
 }

@@ -1,6 +1,6 @@
 package ru.kornilaev.traffic_light;
 
-public class Yellow implements State{
+/*public class Yellow implements State{
     final String color = "Желтый";
     State prev;
 
@@ -20,4 +20,4 @@ public class Yellow implements State{
     public String getColor() {
         return color;
     }
-}
+}*/

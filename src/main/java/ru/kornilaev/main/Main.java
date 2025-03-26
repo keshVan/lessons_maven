@@ -2,31 +2,33 @@ package ru.kornilaev.main;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import ru.kornilaev.spring.BeanConfig;
+import ru.kornilaev.streamer.DoubleOperator;
+import ru.kornilaev.streamer.FileSourceTarget;
+import ru.kornilaev.streamer.Streamer;
+import ru.kornilaev.streamer.ToUpperOperator;
 import ru.kornilaev.student.StudentFactory;
 
-import java.util.Date;
-import java.util.SortedMap;
-import java.util.function.Predicate;
+import java.util.List;
 
 class Main {
-    public static void main(String[] args) throws InterruptedException {
-        ApplicationContext ctx = new AnnotationConfigApplicationContext(BeanConfig.class);
-        System.out.println(ctx.getBean("good"));
-        System.out.println(ctx.getBean("veryGood"));
-        System.out.println("1-----");
-        System.out.println(ctx.getBean("bestFeedback"));
+    public static void main(String[] args) {
+        ApplicationContext ctx = new AnnotationConfigApplicationContext("ru/kornilaev/spring", "ru/kornilaev/student", "ru/kornilaev/streamer");
         System.out.println(ctx.getBean("hardToSay"));
         System.out.println(ctx.getBean("hardToSay"));
         System.out.println(ctx.getBean("hardToSay"));
         System.out.println(ctx.getBean("hardToSay"));
-        System.out.println("2-----");
         System.out.println(ctx.getBean("bestFeedback"));
 
-        System.out.println(ctx.getBean("std1"));
-        System.out.println(ctx.getBean("std2"));
+        StudentFactory sf = ctx.getBean(StudentFactory.class);
+        System.out.println(sf.newStudent("женя", 2, 5, 5, 5, 5));
 
-        StudentFactory sf = ctx.getBean("sf", StudentFactory.class);
+        /*FileSourceTarget fst = ctx.getBean(FileSourceTarget.class);
+        fst.setSource("src/main/resources/test.txt");
+        fst.setTarget("src/main/resources/out.txt");
+        Streamer streamer = ctx.getBean(Streamer.class);
+        streamer.setActions(List.of(ctx.getBean(ToUpperOperator.class), ctx.getBean(DoubleOperator.class)));
+        streamer.execute();*/
+
     }
 }
 

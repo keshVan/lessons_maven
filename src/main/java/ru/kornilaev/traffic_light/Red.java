@@ -1,6 +1,6 @@
 package ru.kornilaev.traffic_light;
 
-public class Red implements State {
+/*public class Red implements State {
     final String color = "Красный";
 
     @Override
@@ -12,4 +12,4 @@ public class Red implements State {
     public String getColor() {
         return color;
     }
-}
+}*/
