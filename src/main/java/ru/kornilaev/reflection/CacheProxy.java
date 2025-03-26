@@ -8,26 +8,23 @@ import java.util.*;
 
 public class CacheProxy {
 
-    private CacheProxy() {
-    }
+    private CacheProxy(){}
 
     public static <T> T cache(T obj) {
-        if (obj == null || obj.getClass().isAnnotationPresent(Cache.class)) {
-            return obj;
-        } else {
+        if (obj != null) {
             return (T) Proxy.newProxyInstance(
                     obj.getClass().getClassLoader(),
                     obj.getClass().getInterfaces(),
                     new ProxyHandler(obj)
             );
         }
+        throw new NullPointerException();
     }
 
     private static class ProxyHandler implements InvocationHandler {
         final Object obj;
         final Map<MethodKey, Object> cacheMap = new HashMap<>();
         final Map<Field, Object> state = new HashMap<>();
-        final Set<String> cachedMethods = new HashSet<>();
 
         ProxyHandler(Object obj) {
             this.obj = obj;
@@ -41,16 +38,14 @@ public class CacheProxy {
                     throw new RuntimeException(e);
                 }
             });
-
-            cachedMethods.addAll(List.of(obj.getClass().getAnnotation(Cache.class).value()));
         }
 
         @Override
-        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        public Object invoke(Object proxy, java.lang.reflect.Method method, Object[] args) throws Throwable {
             method = obj.getClass().getDeclaredMethod(method.getName(), getArgsClasses(args));
             method.setAccessible(true);
 
-            if (!cachedMethods.contains(method.getName()) && cachedMethods.size() > 0)
+            if (!obj.getClass().isAnnotationPresent(Cache.class) || !checkMethod(method, obj.getClass().getAnnotation(Cache.class).value()))
                 return method.invoke(this.obj, args);
 
             if (checkState()) cacheMap.clear();
@@ -72,7 +67,7 @@ public class CacheProxy {
                 f.setAccessible(true);
                 try {
                     Object value = f.get(obj);
-                    if (!state.get(f).equals(value)) {
+                    if (!state.get(f).equals(value))  {
                         state.put(f, value);
                         needClear = true;
                     }
@@ -135,4 +130,3 @@ public class CacheProxy {
         }
     }
 }
-
