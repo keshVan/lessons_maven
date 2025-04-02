@@ -7,12 +7,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Lazy
-public class Red implements State {
-    final String color = "Красный";
+public class YellowGreen implements State {
+    final String color = "Желтый";
     State nextState;
 
     @Autowired
-    public void setNextState(@Qualifier("yellowRed") State nextState) {
+    public void setNextState(@Qualifier("red") State nextState) {
         this.nextState = nextState;
     }
 
@@ -25,4 +25,6 @@ public class Red implements State {
     public String getColor() {
         return color;
     }
+
+
 }

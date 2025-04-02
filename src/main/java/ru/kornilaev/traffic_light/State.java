@@ -1,6 +1,6 @@
 package ru.kornilaev.traffic_light;
 
 public interface State {
-    void next(TrafficLight tf);
+    State next();
     String getColor();
 }
