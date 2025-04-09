@@ -22,32 +22,31 @@ public class ClassReset {
                 fields = Arrays.stream(clazz.getDeclaredFields())
                         .peek(f -> f.setAccessible(true))
                         .toList();
-                defaultFields = clazz.getAnnotation(Default.class).value();
+                //defaultFields = clazz.getAnnotation(Default.class).value();
             } else {
                 fields = Arrays.stream(clazz.getDeclaredFields())
                         .filter(f -> f.isAnnotationPresent(Default.class))
                         .peek(f -> f.setAccessible(true))
                         .toList();
                 if (!fields.isEmpty()) continue;
-                defaultFields = fields.getFirst().getAnnotation(Default.class).value();
+                //defaultFields = fields.getFirst().getAnnotation(Default.class).value();
             }
 
-            Arrays.stream(defaultFields.getDeclaredFields()).forEach(x -> x.setAccessible(true));
+           // Arrays.stream(defaultFields.getDeclaredFields()).forEach(x -> x.setAccessible(true));
             Constructor<?> defaultCnst = null;
             Object defaultObj = null;
             try {
-                defaultCnst = defaultFields.getDeclaredConstructor();
+                //defaultCnst = defaultFields.getDeclaredConstructor();
                 defaultObj = defaultCnst.newInstance();
-            } catch (InvocationTargetException | InstantiationException |
-                     IllegalAccessException | NoSuchMethodException e) {
+            } catch (Exception e) {
                 throw new RuntimeException(e);
             }
             for (Field f : fields) {
                 try {
                     System.out.println(f.getName());
-                    Field defaultField = defaultFields.getDeclaredField(f.getName());
-                    f.set(o, defaultField.get(defaultObj));
-                } catch (IllegalAccessException | NoSuchFieldException e) {
+                    //Field defaultField = defaultFields.getDeclaredField(f.getName());
+                    //f.set(o, defaultField.get(defaultObj));
+                } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
             }

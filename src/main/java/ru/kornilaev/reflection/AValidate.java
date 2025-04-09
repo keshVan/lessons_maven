@@ -9,6 +9,6 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-@Validate({HumanTests.class})
+@Validate("1")
 public @interface AValidate {
 }

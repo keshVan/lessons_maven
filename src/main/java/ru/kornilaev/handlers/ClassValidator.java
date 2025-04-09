@@ -13,7 +13,7 @@ public class ClassValidator {
     private ClassValidator() {}
 
     public static void validate(Object... objects) {
-        for (Object o : objects) {
+       /* for (Object o : objects) {
             Class<?> clazz = o.getClass();
             Annotation[] annotations = clazz.getAnnotations();
             Validate annotation = null;
@@ -58,6 +58,6 @@ public class ClassValidator {
                     throw new RuntimeException(e);
                 }
             }
-        }
+        } */
     }
 }
