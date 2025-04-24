@@ -15,7 +15,6 @@ class Main {
         DAO dao = ctx.getBean(DAO.class);
         List<Employee> employees = dao.findAll(Employee.class);
         System.out.println(employees);
-
     }
 }
 

@@ -4,10 +4,7 @@ import org.springframework.stereotype.Component;
 
 import java.lang.reflect.*;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Component
 public class DAO {
@@ -17,47 +14,56 @@ public class DAO {
         this.connection = connection;
     }
 
-    public <T> List<T> findAll(Class<T> clazz) throws SQLException, NoSuchMethodException {
+    public <T> List<T> findAll(Class<T> clazz) {
         List<T> result = new ArrayList<>();
         String table = clazz.getSimpleName().toLowerCase() + "s";
 
-        Statement statement = connection.createStatement();
+        Map<String, Field> columnMap = new HashMap<>();
+        Map<String, Method> setterMap = new HashMap<>();
 
-        ResultSet rs = statement.executeQuery("SELECT * FROM " + table);
-        ResultSetMetaData md = rs.getMetaData();
+        for (Field f : clazz.getDeclaredFields()) {
+            String column = f.getName();
+            if (f.isAnnotationPresent(Column.class))
+                column = f.getAnnotation(Column.class).value();
 
-        Constructor<T> constructor = (Constructor<T>) clazz.getDeclaredConstructors()[0];
-        constructor.setAccessible(true);
-        Map<String, Integer> argsPos = getArgsPos(constructor);
+            columnMap.put(column, f);
 
-        while (rs.next()) {
-            T obj = null;
-            Object[] args = new Object[md.getColumnCount()];
-
-            for (int i = 1; i <= md.getColumnCount(); i++) {
-                String column  = md.getColumnName(i);
-                Object val = rs.getObject(i);
-                args[argsPos.get(column)] = val;
-                try {
-                    obj = constructor.newInstance(args);
-                } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-                    throw new RuntimeException(e);
-                }
+            String setterName = "set" + Character.toUpperCase(f.getName().charAt(0)) + f.getName().substring(1);
+            try {
+                Method setter = clazz.getDeclaredMethod(setterName, f.getType());
+                setterMap.put(column, setter);
+            } catch (NoSuchMethodException _) {
+                f.setAccessible(true);
             }
-            result.add(obj);
         }
-        return result;
-    }
 
-    private Map<String, Integer> getArgsPos(Constructor<?> constructor) {
-        Map<String, Integer> res = new LinkedHashMap<>();
-        Parameter[] parameters = constructor.getParameters();
-        int pos = 0;
-        for (Parameter p : parameters) {
-            String fieldName = p.getAnnotation(FieldName.class).value();
-            res.put(fieldName, pos);
-            pos++;
+        String columns = String.join(", ", columnMap.keySet());
+        String sql = "SELECT " + columns + " FROM " + table;
+
+        try (Statement statement = connection.createStatement()) {
+            ResultSet rs = statement.executeQuery(sql);
+
+            while (rs.next()) {
+                T obj = clazz.getDeclaredConstructor().newInstance();
+
+                for (Map.Entry<String, Field> entry : columnMap.entrySet()) {
+                    String column = entry.getKey();
+
+                    Object val = rs.getObject(column);
+
+                    if (setterMap.containsKey(column)) {
+                        setterMap.get(column).invoke(obj, val);
+                    } else {
+                        entry.getValue().set(obj, val);
+                    }
+                }
+
+                result.add(obj);
+            }
+        } catch (SQLException | ReflectiveOperationException e) {
+            throw new DaoException("Failed to set data for class: " + clazz.getSimpleName(), e);
         }
-        return res;
+
+        return result;
     }
 }
